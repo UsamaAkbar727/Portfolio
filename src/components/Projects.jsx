@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaExternalLinkAlt, FaCode, FaRocket, FaTimes, FaArrowRight } from 'react-icons/fa';
 
-const ProjectCard = ({ project, index, onClick }) => {
+const ProjectCard = ({ project, index, onClick, isFeatured }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -12,95 +12,105 @@ const ProjectCard = ({ project, index, onClick }) => {
       viewport={{ once: true, margin: '-50px' }}
       transition={{
         duration: 0.6,
-        delay: index * 0.15,
+        delay: index * 0.12,
         type: 'spring',
         stiffness: 100
       }}
       whileHover={{
-        scale: 1.03,
-        y: -8,
+        y: -12,
         transition: { duration: 0.3 }
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group cursor-pointer"
+      className={`group cursor-pointer ${isFeatured ? 'md:col-span-2 md:row-span-2' : ''}`}
     >
       <div
-        className="glass-premium rounded-2xl p-6 h-full flex flex-col transition-all duration-500 hover:bg-white/10 hover:border-accent-primary/40 relative overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-accent-primary/20"
+        className="glass-premium rounded-3xl p-8 h-full flex flex-col transition-all duration-500 hover:bg-white/8 hover:border-accent-primary/30 relative overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-accent-primary/20 backdrop-blur-xl"
         onClick={onClick}
       >
-        {/* Animated gradient border on hover */}
+        {/* Gradient overlay on hover */}
         <motion.div
-          className="absolute inset-0 rounded-2xl pointer-events-none"
+          className="absolute inset-0 rounded-3xl pointer-events-none"
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
           style={{
-            background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15))',
-            padding: '2px'
+            background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.05))',
           }}
-        >
-          <div className="w-full h-full rounded-2xl" style={{
-            background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(236, 72, 153, 0.4))',
-          }} />
-        </motion.div>
+        />
+
+        {/* Subtle glow effect */}
+        <motion.div
+          className="absolute -top-1/2 -right-1/2 w-96 h-96 rounded-full pointer-events-none"
+          animate={isHovered ? {
+            opacity: [0.1, 0.2, 0.1],
+            scale: [1, 1.2, 1]
+          } : {
+            opacity: 0
+          }}
+          transition={{ duration: 3, repeat: isHovered ? Infinity : 0 }}
+          style={{
+            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent)',
+            filter: 'blur(40px)'
+          }}
+        />
 
         {/* Click hint */}
         <motion.div
-          className="absolute top-4 right-4 text-text-secondary/50 text-xs font-medium"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ delay: 0.2 }}
+          className="absolute top-6 right-6 text-text-secondary/60 text-xs font-medium tracking-widest uppercase"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : -10 }}
+          transition={{ delay: 0.1 }}
         >
-          Click for details
+          Click to explore
         </motion.div>
 
-        {/* Project Header */}
-        <div className="flex items-start justify-between mb-4 relative z-10">
+        {/* Project Icon */}
+        <div className="flex items-start justify-between mb-6 relative z-10">
           <motion.div
-            className="w-12 h-12 rounded-xl bg-gradient-to-r from-accent-primary to-accent-secondary flex items-center justify-center shadow-lg shadow-accent-primary/40"
+            className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-primary via-accent-secondary to-accent-tertiary flex items-center justify-center shadow-lg shadow-accent-primary/50"
             animate={isHovered ? {
-              scale: [1, 1.15, 1],
-              rotate: [0, 10, -10, 0]
+              scale: [1, 1.2, 1],
+              rotate: [0, 15, -15, 0]
             } : {}}
-            transition={{ duration: 0.6, repeat: isHovered ? Infinity : 0 }}
+            transition={{ duration: 0.8, repeat: isHovered ? Infinity : 0 }}
           >
-            <span className="font-heading font-bold text-white text-lg">
-              {project.name.charAt(0)}
-            </span>
+            <FaRocket className="text-white text-xl" />
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : 10 }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0 }}
             transition={{ duration: 0.3 }}
+            className="px-3 py-1 rounded-full bg-white/5 text-accent-primary text-xs font-semibold border border-accent-primary/30"
           >
-            <FaRocket className="text-accent-primary" />
+            Featured
           </motion.div>
         </div>
 
         {/* Project Content */}
         <div className="relative z-10 flex-grow">
           <motion.h3
-            className="font-heading text-xl font-bold mb-3 text-white"
+            className="font-heading text-2xl sm:text-3xl font-bold mb-3 text-white leading-tight"
             animate={isHovered ? { color: '#6366f1' } : {}}
             transition={{ duration: 0.3 }}
           >
             {project.name}
           </motion.h3>
-          <p className="font-body text-text-secondary mb-4">
+          <p className="font-body text-text-secondary mb-6 text-sm sm:text-base leading-relaxed">
             {project.description}
           </p>
 
           {/* Technologies */}
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-2 mb-8">
             {project.technologies.map((tech, techIndex) => (
               <motion.span
                 key={techIndex}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: techIndex * 0.1 }}
-                className="px-3 py-1 text-xs font-medium rounded-full bg-white/10 text-text-secondary border border-white/10 hover:border-accent-primary/50 hover:text-accent-primary transition-all duration-300"
+                transition={{ delay: techIndex * 0.08, duration: 0.4 }}
+                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 text-text-secondary border border-white/10 hover:border-accent-primary/50 hover:text-accent-primary transition-all duration-300"
               >
                 {tech}
               </motion.span>
@@ -108,15 +118,21 @@ const ProjectCard = ({ project, index, onClick }) => {
           </div>
         </div>
 
-        {/* Live Demo Button */}
+        {/* View Details Button */}
         <motion.div
           className="mt-auto"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: isHovered ? 1 : 1 }}
+          initial={{ y: 0 }}
+          animate={{ y: isHovered ? -4 : 0 }}
+          transition={{ duration: 0.3 }}
         >
-          <div className="inline-flex items-center gap-2 text-accent-primary font-semibold group-hover:text-white transition-colors duration-300">
-            <span>View Details</span>
-            <FaArrowRight size={16} className="group-hover:translate-x-2 transition-transform duration-300" />
+          <div className="inline-flex items-center gap-2 text-accent-primary font-semibold text-base group-hover:text-accent-secondary transition-colors duration-300">
+            <span>Explore Project</span>
+            <motion.div
+              animate={isHovered ? { x: 8 } : { x: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <FaArrowRight size={16} />
+            </motion.div>
           </div>
         </motion.div>
       </div>
@@ -131,81 +147,102 @@ const Projects = () => {
     {
       id: 1,
       name: 'POS System',
-      description: 'Inventory and billing management system with real-time stock tracking.',
-      technologies: ['Tailwind CSS', 'JavaScript', 'PHP', 'MySQL'],
-      liveLink: '#'
+      description: 'Comprehensive inventory and billing management system with real-time stock tracking, multi-user support, and advanced reporting capabilities.',
+      technologies: ['PHP', 'MySQL', 'Tailwind CSS', 'JavaScript'],
+      liveLink: '#',
+      featured: true
     },
     {
       id: 2,
-      name: 'Shopping Store',
-      description: 'Secure backend API for web applications with authentication.',
-      technologies: ['Boostrap', 'J,S', 'Laravel', 'MySQL'],
-      liveLink: '#'
+      name: 'Laravel REST API',
+      description: 'Secure backend API for web applications with robust authentication and authorization mechanisms.',
+      technologies: ['Laravel', 'MySQL'],
+      liveLink: '#',
+      featured: false
     },
     {
       id: 3,
-      name: 'CarePulse',
-      description: 'Modern admin dashboard with dynamic data visualization.',
-      technologies: ['PHP', 'React JS', 'Tailwind CSS'],
-      liveLink: '#'
+      name: 'React Dashboard',
+      description: 'Modern admin dashboard with dynamic data visualization and interactive charts.',
+      technologies: ['React JS', 'Tailwind CSS'],
+      liveLink: '#',
+      featured: false
     }
   ];
 
+  // Separate featured and regular projects
+  const featuredProject = projects.find(p => p.featured);
+  const regularProjects = projects.filter(p => !p.featured);
+
   return (
-    <section id="projects" className="py-20 relative">
-      {/* Background decoration */}
+    <section id="projects" className="py-32 relative">
+      {/* Enhanced background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="absolute top-1/4 left-0 w-64 h-64 bg-accent-primary/10 rounded-full blur-3xl"
+          className="absolute top-1/3 -left-20 w-96 h-96 bg-accent-primary/15 rounded-full blur-3xl"
           animate={{
-            x: [0, 50, 0],
+            y: [0, 50, 0],
             opacity: [0.3, 0.5, 0.3]
           }}
-          transition={{ duration: 6, repeat: Infinity }}
+          transition={{ duration: 8, repeat: Infinity }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-0 w-64 h-64 bg-accent-tertiary/10 rounded-full blur-3xl"
+          className="absolute bottom-1/3 -right-20 w-96 h-96 bg-accent-tertiary/15 rounded-full blur-3xl"
           animate={{
-            x: [0, -50, 0],
+            y: [0, -50, 0],
             opacity: [0.3, 0.5, 0.3]
           }}
-          transition={{ duration: 6, repeat: Infinity, delay: 3 }}
+          transition={{ duration: 8, repeat: Infinity, delay: 2 }}
         />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
           <motion.span
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="inline-block px-4 py-2 glass rounded-full text-sm text-accent-primary mb-4"
+            transition={{ delay: 0.1 }}
+            className="inline-block px-4 py-2.5 glass-premium rounded-full text-sm font-semibold text-accent-primary mb-6 border border-accent-primary/20"
           >
-            Portfolio
+            💼 Portfolio Showcase
           </motion.span>
 
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            My <span className="gradient-text">Projects</span>
+          <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            Featured <span className="gradient-text">Projects</span>
           </h2>
-          <p className="text-text-secondary max-w-2xl mx-auto">
-            Some of the projects I've worked on
+          <p className="text-text-secondary max-w-2xl mx-auto text-lg">
+            Explore a curated selection of my most impactful works showcasing expertise in full-stack development
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          {/* Featured Project (Takes 2x2 space) */}
+          {featuredProject && (
+            <ProjectCard
+              project={featuredProject}
+              index={0}
+              onClick={() => setSelectedProject(featuredProject)}
+              isFeatured={true}
+            />
+          )}
+
+          {/* Regular Projects */}
+          {regularProjects.map((project, index) => (
             <ProjectCard
               key={project.id}
               project={project}
-              index={index}
+              index={index + 1}
               onClick={() => setSelectedProject(project)}
+              isFeatured={false}
             />
           ))}
         </div>
@@ -215,10 +252,10 @@ const Projects = () => {
       <AnimatePresence>
         {selectedProject && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+            animate={{ opacity: 1, backdropFilter: 'blur(10px)' }}
+            exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60"
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
@@ -226,52 +263,50 @@ const Projects = () => {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.8, y: 50, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="glass-premium rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-accent-primary/30 relative"
+              className="glass-dark rounded-3xl p-10 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-accent-primary/30 relative border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}
               <motion.button
-                className="absolute top-4 right-4 w-10 h-10 glass rounded-xl flex items-center justify-center text-text-secondary hover:text-white hover:bg-white/10 transition-all duration-300"
+                className="absolute top-6 right-6 w-12 h-12 glass-premium rounded-2xl flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300"
                 onClick={() => setSelectedProject(null)}
-                whileHover={{ scale: 1.1, rotate: 90 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <FaTimes size={18} />
+                <FaTimes size={20} />
               </motion.button>
 
               {/* Project header */}
-              <div className="flex items-start gap-4 mb-6">
+              <div className="flex items-start gap-6 mb-8">
                 <motion.div
-                  className="w-16 h-16 rounded-2xl bg-gradient-to-r from-accent-primary to-accent-secondary flex items-center justify-center shadow-lg shadow-accent-primary/40"
+                  className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center shadow-lg shadow-accent-primary/40 flex-shrink-0"
                   initial={{ scale: 0.8, rotate: -10 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ delay: 0.2, type: 'spring' }}
                 >
-                  <span className="font-heading font-bold text-white text-2xl">
-                    {selectedProject.name.charAt(0)}
-                  </span>
+                  <FaRocket className="text-white text-2xl" />
                 </motion.div>
                 <div>
                   <h3 className="font-heading text-3xl font-bold text-white mb-2">
                     {selectedProject.name}
                   </h3>
-                  <p className="text-text-secondary">
+                  <p className="text-text-secondary text-base leading-relaxed">
                     {selectedProject.description}
                   </p>
                 </div>
               </div>
 
               {/* Technologies */}
-              <div className="mb-8">
-                <h4 className="font-heading font-semibold text-white mb-4">Technologies Used</h4>
+              <div className="mb-10">
+                <h4 className="font-heading font-semibold text-white mb-4 text-lg">Technologies Used</h4>
                 <div className="flex flex-wrap gap-3">
                   {selectedProject.technologies.map((tech, index) => (
                     <motion.span
                       key={tech}
                       initial={{ opacity: 0, scale: 0.8, y: 20 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
-                      transition={{ delay: 0.3 + index * 0.1 }}
-                      className="px-4 py-2 glass rounded-xl text-sm font-medium text-accent-primary border border-accent-primary/30"
+                      transition={{ delay: 0.3 + index * 0.08, duration: 0.4 }}
+                      className="px-4 py-2.5 glass-premium rounded-xl text-sm font-medium text-accent-primary border border-accent-primary/30 hover:bg-white/10 transition-all duration-300"
                     >
                       {tech}
                     </motion.span>
@@ -284,7 +319,7 @@ const Projects = () => {
                 href={selectedProject.liveLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-xl font-heading font-semibold text-white shadow-lg hover:shadow-xl hover:shadow-accent-primary/30 transition-all duration-300 w-full sm:w-auto"
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-tertiary rounded-xl font-heading font-semibold text-white shadow-lg hover:shadow-2xl hover:shadow-accent-primary/40 transition-all duration-300 w-full sm:w-auto"
                 whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.95 }}
               >
