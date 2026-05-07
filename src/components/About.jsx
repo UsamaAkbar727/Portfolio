@@ -219,7 +219,7 @@ const About = () => {
                     } : {}}
                     transition={{ duration: 0.6 }}
                   >
-                    <span className="font-heading font-bold text-white">1</span>
+                    <span className="font-heading font-bold text-text-primary">1</span>
                   </motion.div>
                   <div>
                     <h4 className="font-heading text-lg font-semibold mb-2">
@@ -255,7 +255,7 @@ const About = () => {
                     } : {}}
                     transition={{ duration: 0.6 }}
                   >
-                    <span className="font-heading font-bold text-white">2</span>
+                    <span className="font-heading font-bold text-text-primary">2</span>
                   </motion.div>
                   <div>
                     <h4 className="font-heading text-lg font-semibold mb-2">
@@ -291,7 +291,7 @@ const About = () => {
                     } : {}}
                     transition={{ duration: 0.6 }}
                   >
-                    <span className="font-heading font-bold text-white">3</span>
+                    <span className="font-heading font-bold text-text-primary">3</span>
                   </motion.div>
                   <div>
                     <h4 className="font-heading text-lg font-semibold mb-2">

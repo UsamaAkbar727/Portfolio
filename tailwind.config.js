@@ -9,14 +9,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        'bg-primary': '#0a0a0f',
-        'bg-secondary': '#12121a',
-        'bg-tertiary': '#1a1a25',
+        'bg-primary': 'var(--bg-primary)',
+        'bg-secondary': 'var(--bg-secondary)',
+        'bg-tertiary': 'var(--bg-tertiary)',
         'accent-primary': '#6366f1',
         'accent-secondary': '#8b5cf6',
         'accent-tertiary': '#ec4899',
-        'text-primary': '#ffffff',
-        'text-secondary': '#94a3b8',
+        'text-primary': 'var(--text-primary)',
+        'text-secondary': 'var(--text-secondary)',
       },
       fontFamily: {
         heading: ['Poppins', 'sans-serif'],
@@ -61,16 +61,16 @@ export default {
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.glass-premium': {
-          'background': 'rgba(18, 18, 26, 0.45)',
+          'background': 'var(--glass-bg)',
           'backdrop-filter': 'blur(20px)',
           '-webkit-backdrop-filter': 'blur(20px)',
-          'border': '1px solid rgba(255, 255, 255, 0.08)',
+          'border': '1px solid var(--glass-border)',
         },
         '.glass-dark': {
-          'background': 'rgba(10, 10, 15, 0.6)',
+          'background': 'var(--glass-bg-dark)',
           'backdrop-filter': 'blur(24px)',
           '-webkit-backdrop-filter': 'blur(24px)',
-          'border': '1px solid rgba(255, 255, 255, 0.05)',
+          'border': '1px solid var(--glass-border-dark)',
         },
         '.shimmer': {
           'background': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',

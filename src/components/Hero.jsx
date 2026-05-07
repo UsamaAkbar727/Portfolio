@@ -201,7 +201,7 @@ const Hero = () => {
               <motion.a
                 href="#projects"
                 onClick={(e) => handleScroll(e, '#projects')}
-                className="group px-8 py-4 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-xl font-heading font-semibold text-white shadow-lg hover:shadow-xl hover:shadow-accent-primary/30 transition-all duration-300 relative overflow-hidden"
+className="group px-8 py-4 bg-gradient-to-r from-accent-primary to-accent-secondary rounded-xl font-heading font-semibold text-white shadow-lg hover:shadow-xl hover:shadow-accent-primary/30 transition-all duration-300 relative overflow-hidden"
                 whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -211,7 +211,7 @@ const Hero = () => {
               <motion.a
                 href="#contact"
                 onClick={(e) => handleScroll(e, '#contact')}
-                className="group px-8 py-4 glass-premium rounded-xl font-heading font-semibold text-white border border-white/20 hover:border-accent-primary/50 transition-all duration-300 backdrop-blur-xl"
+className="group px-8 py-4 glass-premium rounded-xl font-heading font-semibold text-text-primary border border-accent-primary/20 hover:border-accent-primary/50 transition-all duration-300 backdrop-blur-xl"
                 whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.95 }}
               >

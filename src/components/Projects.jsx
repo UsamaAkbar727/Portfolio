@@ -1,6 +1,12 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaExternalLinkAlt, FaCode, FaRocket, FaTimes, FaArrowRight } from 'react-icons/fa';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FaExternalLinkAlt,
+  FaCode,
+  FaRocket,
+  FaTimes,
+  FaArrowRight,
+} from "react-icons/fa";
 
 const ProjectCard = ({ project, index, onClick, isFeatured }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -9,20 +15,20 @@ const ProjectCard = ({ project, index, onClick, isFeatured }) => {
     <motion.div
       initial={{ opacity: 0, y: 50, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: true, margin: "-50px" }}
       transition={{
         duration: 0.6,
         delay: index * 0.12,
-        type: 'spring',
-        stiffness: 100
+        type: "spring",
+        stiffness: 100,
       }}
       whileHover={{
         y: -12,
-        transition: { duration: 0.3 }
+        transition: { duration: 0.3 },
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group cursor-pointer ${isFeatured ? 'md:col-span-2 md:row-span-2' : ''}`}
+      className={`group cursor-pointer ${isFeatured ? "md:col-span-2 md:row-span-2" : ""}`}
     >
       <div
         className="glass-premium rounded-3xl p-8 h-full flex flex-col transition-all duration-500 hover:bg-white/8 hover:border-accent-primary/30 relative overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-accent-primary/20 backdrop-blur-xl"
@@ -35,23 +41,29 @@ const ProjectCard = ({ project, index, onClick, isFeatured }) => {
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.3 }}
           style={{
-            background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.05))',
+            background:
+              "linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.05))",
           }}
         />
 
         {/* Subtle glow effect */}
         <motion.div
           className="absolute -top-1/2 -right-1/2 w-96 h-96 rounded-full pointer-events-none"
-          animate={isHovered ? {
-            opacity: [0.1, 0.2, 0.1],
-            scale: [1, 1.2, 1]
-          } : {
-            opacity: 0
-          }}
+          animate={
+            isHovered
+              ? {
+                  opacity: [0.1, 0.2, 0.1],
+                  scale: [1, 1.2, 1],
+                }
+              : {
+                  opacity: 0,
+                }
+          }
           transition={{ duration: 3, repeat: isHovered ? Infinity : 0 }}
           style={{
-            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent)',
-            filter: 'blur(40px)'
+            background:
+              "radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent)",
+            filter: "blur(40px)",
           }}
         />
 
@@ -69,10 +81,14 @@ const ProjectCard = ({ project, index, onClick, isFeatured }) => {
         <div className="flex items-start justify-between mb-6 relative z-10">
           <motion.div
             className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-primary via-accent-secondary to-accent-tertiary flex items-center justify-center shadow-lg shadow-accent-primary/50"
-            animate={isHovered ? {
-              scale: [1, 1.2, 1],
-              rotate: [0, 15, -15, 0]
-            } : {}}
+            animate={
+              isHovered
+                ? {
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 15, -15, 0],
+                  }
+                : {}
+            }
             transition={{ duration: 0.8, repeat: isHovered ? Infinity : 0 }}
           >
             <FaRocket className="text-white text-xl" />
@@ -92,7 +108,7 @@ const ProjectCard = ({ project, index, onClick, isFeatured }) => {
         <div className="relative z-10 flex-grow">
           <motion.h3
             className="font-heading text-2xl sm:text-3xl font-bold mb-3 text-white leading-tight"
-            animate={isHovered ? { color: '#6366f1' } : {}}
+            animate={isHovered ? { color: "#6366f1" } : {}}
             transition={{ duration: 0.3 }}
           >
             {project.name}
@@ -145,34 +161,36 @@ const Projects = () => {
 
   const projects = [
     {
-      id: 1,
-      name: 'POS System',
-      description: 'Comprehensive inventory and billing management system with real-time stock tracking, multi-user support, and advanced reporting capabilities.',
-      technologies: ['PHP', 'MySQL', 'Tailwind CSS', 'JavaScript'],
-      liveLink: '#',
-      featured: true
+      name: "Web Game",
+      description:
+        "An interactive web-based game featuring smooth animations, responsive controls, and optimized performance for a seamless gaming experience.",
+      technologies: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
+      liveLink: "https://web-game-olive-six.vercel.app", // Aapka original Vercel link
+      featured: true,
     },
     {
       id: 2,
-      name: 'Laravel REST API',
-      description: 'Secure backend API for web applications with robust authentication and authorization mechanisms.',
-      technologies: ['Laravel', 'MySQL'],
-      liveLink: '#',
-      featured: false
+      name: "Laravel REST API",
+      description:
+        "Secure backend API for web applications with robust authentication and authorization mechanisms.",
+      technologies: ["Laravel", "MySQL"],
+      liveLink: "#",
+      featured: false,
     },
     {
       id: 3,
-      name: 'React Dashboard',
-      description: 'Modern admin dashboard with dynamic data visualization and interactive charts.',
-      technologies: ['React JS', 'Tailwind CSS'],
-      liveLink: '#',
-      featured: false
-    }
+      name: "React Dashboard",
+      description:
+        "Modern admin dashboard with dynamic data visualization and interactive charts.",
+      technologies: ["React JS", "Tailwind CSS"],
+      liveLink: "#",
+      featured: false,
+    },
   ];
 
   // Separate featured and regular projects
-  const featuredProject = projects.find(p => p.featured);
-  const regularProjects = projects.filter(p => !p.featured);
+  const featuredProject = projects.find((p) => p.featured);
+  const regularProjects = projects.filter((p) => !p.featured);
 
   return (
     <section id="projects" className="py-32 relative">
@@ -182,7 +200,7 @@ const Projects = () => {
           className="absolute top-1/3 -left-20 w-96 h-96 bg-accent-primary/15 rounded-full blur-3xl"
           animate={{
             y: [0, 50, 0],
-            opacity: [0.3, 0.5, 0.3]
+            opacity: [0.3, 0.5, 0.3],
           }}
           transition={{ duration: 8, repeat: Infinity }}
         />
@@ -190,7 +208,7 @@ const Projects = () => {
           className="absolute bottom-1/3 -right-20 w-96 h-96 bg-accent-tertiary/15 rounded-full blur-3xl"
           animate={{
             y: [0, -50, 0],
-            opacity: [0.3, 0.5, 0.3]
+            opacity: [0.3, 0.5, 0.3],
           }}
           transition={{ duration: 8, repeat: Infinity, delay: 2 }}
         />
@@ -201,7 +219,7 @@ const Projects = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
@@ -219,7 +237,8 @@ const Projects = () => {
             Featured <span className="gradient-text">Projects</span>
           </h2>
           <p className="text-text-secondary max-w-2xl mx-auto text-lg">
-            Explore a curated selection of my most impactful works showcasing expertise in full-stack development
+            Explore a curated selection of my most impactful works showcasing
+            expertise in full-stack development
           </p>
         </motion.div>
 
@@ -252,9 +271,9 @@ const Projects = () => {
       <AnimatePresence>
         {selectedProject && (
           <motion.div
-            initial={{ opacity: 0, backdropFilter: 'blur(0px)' }}
-            animate={{ opacity: 1, backdropFilter: 'blur(10px)' }}
-            exit={{ opacity: 0, backdropFilter: 'blur(0px)' }}
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(10px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60"
             onClick={() => setSelectedProject(null)}
           >
@@ -262,7 +281,7 @@ const Projects = () => {
               initial={{ scale: 0.8, y: 50, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.8, y: 50, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="glass-dark rounded-3xl p-10 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-accent-primary/30 relative border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
@@ -282,7 +301,7 @@ const Projects = () => {
                   className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center shadow-lg shadow-accent-primary/40 flex-shrink-0"
                   initial={{ scale: 0.8, rotate: -10 }}
                   animate={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.2, type: 'spring' }}
+                  transition={{ delay: 0.2, type: "spring" }}
                 >
                   <FaRocket className="text-white text-2xl" />
                 </motion.div>
@@ -298,7 +317,9 @@ const Projects = () => {
 
               {/* Technologies */}
               <div className="mb-10">
-                <h4 className="font-heading font-semibold text-white mb-4 text-lg">Technologies Used</h4>
+                <h4 className="font-heading font-semibold text-white mb-4 text-lg">
+                  Technologies Used
+                </h4>
                 <div className="flex flex-wrap gap-3">
                   {selectedProject.technologies.map((tech, index) => (
                     <motion.span

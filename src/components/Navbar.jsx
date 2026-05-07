@@ -1,6 +1,18 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaBars, FaTimes, FaHome, FaUser, FaCode, FaProjectDiagram, FaEnvelope } from 'react-icons/fa';
+import {
+  FaGithub,
+  FaLinkedin,
+  FaBars,
+  FaTimes,
+  FaHome,
+  FaUser,
+  FaCode,
+  FaProjectDiagram,
+  FaEnvelope,
+  FaSun,
+  FaMoon,
+} from 'react-icons/fa';
 
 const navLinks = [
   { name: 'Home', href: '#home', icon: FaHome },
@@ -10,10 +22,11 @@ const navLinks = [
   { name: 'Contact', href: '#contact', icon: FaEnvelope },
 ];
 
-const Navbar = () => {
+const Navbar = ({ theme, onToggleTheme }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,6 +96,7 @@ const Navbar = () => {
               const Icon = link.icon;
               const isActive = activeSection === link.href.slice(1);
 
+
               return (
                 <motion.a
                   key={link.name}
@@ -118,8 +132,21 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Social Icons - Desktop */}
+          {/* Theme toggle - Desktop */}
           <div className="hidden md:flex items-center space-x-3">
+            <motion.button
+              type="button"
+              onClick={onToggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300 group"
+              whileHover={{ scale: 1.1, y: -3 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {theme === 'dark' ? <FaSun size={18} /> : <FaMoon size={18} />}
+            </motion.button>
+
+            {/* Social Icons - Desktop */}
+
             <motion.a
               href="https://github.com/UsamaAkbar727"
               target="_blank"
@@ -142,14 +169,27 @@ const Navbar = () => {
             </motion.a>
           </div>
 
+          {/* Mobile Theme Toggle */}
+          <motion.button
+            className="md:hidden w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white transition-all duration-300 hover:border-accent-primary/50 mr-2"
+            onClick={onToggleTheme}
+            whileTap={{ scale: 0.9 }}
+            type="button"
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? <FaSun size={20} /> : <FaMoon size={20} />}
+          </motion.button>
+
           {/* Mobile Menu Button */}
-          <button
+          <motion.button
             className="md:hidden w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white transition-all duration-300 hover:border-accent-primary/50"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileTap={{ scale: 0.9 }}
+            type="button"
           >
             {isMobileMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
-          </button>
+          </motion.button>
+
         </div>
 
         {/* Mobile Menu */}

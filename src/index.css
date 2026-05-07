@@ -14,13 +14,60 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-tertiary: #1a1a25;
+
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+
+  /* Glass backgrounds used by Tailwind plugin utilities */
+  --glass-bg: rgba(18, 18, 26, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg-dark: rgba(10, 10, 15, 0.6);
+  --glass-border-dark: rgba(255, 255, 255, 0.05);
+
+  /* Used to keep icons/text readable in light mode */
+  --icon-primary: #ffffff;
+
+  --scrollbar-track: #0a0a0f;
+}
+
+html[data-theme='light'] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #eef2ff;
+  --bg-tertiary: #ffffff;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(15, 23, 42, 0.12);
+  --glass-bg-dark: rgba(255, 255, 255, 0.82);
+  --glass-border-dark: rgba(15, 23, 42, 0.10);
+
+  --icon-primary: #0f172a;
+
+  --scrollbar-track: #f8fafc;
+}
+
+/* Ensure any input/button placeholders remain readable in light mode */
+html[data-theme='light'] ::placeholder {
+  color: #64748b !important;
+  opacity: 1;
+}
+
+
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #0a0a0f;
-  color: #ffffff;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   overflow-x: hidden;
   line-height: 1.6;
 }
+
+
 
 
 /* Custom scrollbar */
@@ -29,13 +76,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0f;
+  background: var(--scrollbar-track);
 }
+
+
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #6366f1, #8b5cf6);
   border-radius: 8px;
 }
+
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #8b5cf6, #ec4899);
@@ -55,8 +105,9 @@ body {
     radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
-    #0a0a0f;
+    var(--bg-primary);
 }
+
 
 /* Glow effects */
 .glow-primary {
