@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FaGithub,
-  FaLinkedin,
+  FaWhatsapp,
   FaBars,
   FaTimes,
   FaHome,
@@ -158,14 +158,14 @@ const Navbar = ({ theme, onToggleTheme }) => {
               <FaGithub size={18} className="group-hover:rotate-12 transition-transform duration-300" />
             </motion.a>
             <motion.a
-              href="https://www.linkedin.com/in/usama-akbar-a070323a5"
+              href="https://wa.me/923098643058"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300 group"
               whileHover={{ scale: 1.15, y: -3 }}
               whileTap={{ scale: 0.9 }}
             >
-              <FaLinkedin size={18} className="group-hover:text-blue-500 transition-colors duration-300" />
+              <FaWhatsapp size={18} className="group-hover:text-green-500 transition-colors duration-300" />
             </motion.a>
           </div>
 
@@ -229,7 +229,7 @@ const Navbar = ({ theme, onToggleTheme }) => {
                 })}
 
                 <motion.div
-                  className="flex gap-3 pt-4 mt-4 border-t border-white/10"
+                  className="flex gap-3 pt-4 mt-4 border-t border-gray-200 dark:border-white/10"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
@@ -243,12 +243,12 @@ const Navbar = ({ theme, onToggleTheme }) => {
                     <FaGithub size={18} />
                   </a>
                   <a
-                    href="https://www.linkedin.com/in/usama-akbar-a070323a5"
+                    href="https://wa.me/923098643058"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300 hover:scale-110"
                   >
-                    <FaLinkedin size={18} />
+                    <FaWhatsapp size={18} />
                   </a>
                 </motion.div>
               </div>

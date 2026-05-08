@@ -107,7 +107,7 @@ const ProjectCard = ({ project, index, onClick, isFeatured }) => {
         {/* Project Content */}
         <div className="relative z-10 flex-grow">
           <motion.h3
-            className="font-heading text-2xl sm:text-3xl font-bold mb-3 text-white leading-tight"
+            className="font-heading text-2xl sm:text-3xl font-bold mb-3 text-text-primary leading-tight"
             animate={isHovered ? { color: "#6366f1" } : {}}
             transition={{ duration: 0.3 }}
           >
@@ -306,10 +306,10 @@ const Projects = () => {
                   <FaRocket className="text-white text-2xl" />
                 </motion.div>
                 <div>
-                  <h3 className="font-heading text-3xl font-bold text-white mb-2">
+                  <h3 className="font-heading text-3xl font-bold text-gray-900 dark:text-white mb-2">
                     {selectedProject.name}
                   </h3>
-                  <p className="text-text-secondary text-base leading-relaxed">
+                  <p className="text-gray-600 dark:text-text-secondary text-base leading-relaxed">
                     {selectedProject.description}
                   </p>
                 </div>
@@ -317,7 +317,7 @@ const Projects = () => {
 
               {/* Technologies */}
               <div className="mb-10">
-                <h4 className="font-heading font-semibold text-white mb-4 text-lg">
+                <h4 className="font-heading font-semibold text-gray-900 dark:text-white mb-4 text-lg">
                   Technologies Used
                 </h4>
                 <div className="flex flex-wrap gap-3">

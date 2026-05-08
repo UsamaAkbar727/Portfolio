@@ -269,10 +269,10 @@ const Contact = () => {
                     >
                       <FaCheck size={40} className="text-white" />
                     </motion.div>
-                    <h4 className="font-heading text-2xl font-bold text-white mb-2">
+                    <h4 className="font-heading text-2xl font-bold text-gray-900 dark:text-white mb-2">
                       Message Sent!
                     </h4>
-                    <p className="text-text-secondary">
+                    <p className="text-gray-600 dark:text-text-secondary">
                       Thank you for reaching out. I'll get back to you soon!
                     </p>
                   </motion.div>
@@ -304,7 +304,7 @@ const Contact = () => {
                             });
                             if (errors.name) setErrors({ ...errors, name: "" });
                           }}
-                          className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all duration-300 ${
+                          className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all duration-300 ${
                             errors.name
                               ? "border-red-500/50 focus:border-red-500"
                               : "border-white/10 focus:border-accent-primary/50"
@@ -342,7 +342,7 @@ const Contact = () => {
                             if (errors.email)
                               setErrors({ ...errors, email: "" });
                           }}
-                          className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all duration-300 ${
+                          className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all duration-300 ${
                             errors.email
                               ? "border-red-500/50 focus:border-red-500"
                               : "border-white/10 focus:border-accent-primary/50"
@@ -382,7 +382,7 @@ const Contact = () => {
                           if (errors.subject)
                             setErrors({ ...errors, subject: "" });
                         }}
-                        className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all duration-300 ${
+                        className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all duration-300 ${
                           errors.subject
                             ? "border-red-500/50 focus:border-red-500"
                             : "border-white/10 focus:border-accent-primary/50"
@@ -421,7 +421,7 @@ const Contact = () => {
                           if (errors.message)
                             setErrors({ ...errors, message: "" });
                         }}
-                        className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all duration-300 resize-none ${
+                        className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent-primary/20 transition-all duration-300 resize-none ${
                           errors.message
                             ? "border-red-500/50 focus:border-red-500"
                             : "border-white/10 focus:border-accent-primary/50"
@@ -489,7 +489,7 @@ const Contact = () => {
                   <info.icon size={24} className="text-white" />
                 </div>
                 <div>
-                  <p className="text-text-secondary text-sm mb-1">
+                  <p className="text-gray-600 dark:text-text-secondary text-sm mb-1">
                     {info.label}
                   </p>
                   {info.href ? (
@@ -497,12 +497,12 @@ const Contact = () => {
                       href={info.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-heading font-semibold text-white hover:text-accent-primary transition-colors"
+                      className="font-heading font-semibold text-gray-900 dark:text-white hover:text-accent-primary transition-colors"
                     >
                       {info.value}
                     </a>
                   ) : (
-                    <p className="font-heading font-semibold text-white">
+                    <p className="font-heading font-semibold text-gray-900 dark:text-white">
                       {info.value}
                     </p>
                   )}
@@ -511,7 +511,7 @@ const Contact = () => {
             ))}
 
             <motion.div variants={itemVariants} className="pt-6">
-              <h4 className="font-heading font-semibold text-white mb-4">
+              <h4 className="font-heading font-semibold text-gray-900 dark:text-white mb-4">
                 Follow Me
               </h4>
               <div className="flex gap-4">
