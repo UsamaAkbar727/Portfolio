@@ -7,6 +7,7 @@ import {
   FaTimes,
   FaArrowRight,
 } from "react-icons/fa";
+import { projects as projectData } from "../data/projects";
 
 const ProjectCard = ({ project, index, onClick, isFeatured }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -28,129 +29,101 @@ const ProjectCard = ({ project, index, onClick, isFeatured }) => {
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group cursor-pointer ${isFeatured ? "md:col-span-2 md:row-span-2" : ""}`}
+      className={`group cursor-pointer ${isFeatured ? "md:col-span-2 lg:col-span-2" : "col-span-1"}`}
     >
       <div
-        className="glass-premium rounded-3xl p-8 h-full flex flex-col transition-all duration-500 hover:bg-white/8 hover:border-accent-primary/30 relative overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-accent-primary/20 backdrop-blur-xl"
+        className={`glass-premium rounded-[2rem] h-full flex flex-col transition-all duration-500 hover:bg-white/8 hover:border-accent-primary/30 relative overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-accent-primary/20 backdrop-blur-xl border border-white/10`}
         onClick={onClick}
       >
-        {/* Gradient overlay on hover */}
-        <motion.div
-          className="absolute inset-0 rounded-3xl pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.05))",
-          }}
-        />
-
-        {/* Subtle glow effect */}
-        <motion.div
-          className="absolute -top-1/2 -right-1/2 w-96 h-96 rounded-full pointer-events-none"
-          animate={
-            isHovered
-              ? {
-                  opacity: [0.1, 0.2, 0.1],
-                  scale: [1, 1.2, 1],
-                }
-              : {
-                  opacity: 0,
-                }
-          }
-          transition={{ duration: 3, repeat: isHovered ? Infinity : 0 }}
-          style={{
-            background:
-              "radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent)",
-            filter: "blur(40px)",
-          }}
-        />
-
-        {/* Click hint */}
-        <motion.div
-          className="absolute top-6 right-6 text-text-secondary/60 text-xs font-medium tracking-widest uppercase"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : -10 }}
-          transition={{ delay: 0.1 }}
-        >
-          Click to explore
-        </motion.div>
-
-        {/* Project Icon */}
-        <div className="flex items-start justify-between mb-6 relative z-10">
-          <motion.div
-            className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-primary via-accent-secondary to-accent-tertiary flex items-center justify-center shadow-lg shadow-accent-primary/50"
-            animate={
-              isHovered
-                ? {
-                    scale: [1, 1.2, 1],
-                    rotate: [0, 15, -15, 0],
-                  }
-                : {}
-            }
-            transition={{ duration: 0.8, repeat: isHovered ? Infinity : 0 }}
-          >
-            <FaRocket className="text-white text-xl" />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-            className="px-3 py-1 rounded-full bg-white/5 text-accent-primary text-xs font-semibold border border-accent-primary/30"
-          >
-            Featured
-          </motion.div>
-        </div>
-
-        {/* Project Content */}
-        <div className="relative z-10 flex-grow">
-          <motion.h3
-            className="font-heading text-2xl sm:text-3xl font-bold mb-3 text-text-primary leading-tight"
-            animate={isHovered ? { color: "#6366f1" } : {}}
-            transition={{ duration: 0.3 }}
-          >
-            {project.name}
-          </motion.h3>
-          <p className="font-body text-text-secondary mb-6 text-sm sm:text-base leading-relaxed">
-            {project.description}
-          </p>
-
-          {/* Technologies */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            {project.technologies.map((tech, techIndex) => (
-              <motion.span
-                key={techIndex}
-                initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: techIndex * 0.08, duration: 0.4 }}
-                className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-gradient-to-r from-accent-primary/10 to-accent-secondary/10 text-text-secondary border border-white/10 hover:border-accent-primary/50 hover:text-accent-primary transition-all duration-300"
+        {/* Project Image Preview */}
+        <div className={`relative overflow-hidden ${isFeatured ? "h-56 sm:h-64" : "h-48"}`}>
+          <motion.img
+            src={project.image}
+            alt={project.name}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            animate={isHovered ? { scale: 1.1 } : { scale: 1 }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+          
+          {/* Featured Tag */}
+          {isFeatured && (
+            <div className="absolute top-6 left-6 z-20">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="px-5 py-2.5 rounded-2xl bg-accent-primary/90 text-white text-xs font-bold tracking-widest uppercase backdrop-blur-md shadow-lg border border-white/20 flex items-center gap-2"
               >
+                <FaRocket className="animate-pulse" />
+                Featured Project
+              </motion.div>
+            </div>
+          )}
+
+          {/* Technology Pills on Image (Mobile/Small Screen) */}
+          <div className={`absolute bottom-4 left-4 right-4 flex flex-wrap gap-2 z-20 ${isFeatured ? "lg:hidden" : "md:hidden"}`}>
+            {project.technologies.slice(0, 3).map((tech, techIndex) => (
+              <span key={techIndex} className="px-3 py-1.5 text-[10px] font-bold rounded-lg bg-black/60 text-white backdrop-blur-md border border-white/10">
                 {tech}
-              </motion.span>
+              </span>
             ))}
           </div>
         </div>
 
-        {/* View Details Button */}
-        <motion.div
-          className="mt-auto"
-          initial={{ y: 0 }}
-          animate={{ y: isHovered ? -4 : 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="inline-flex items-center gap-2 text-accent-primary font-semibold text-base group-hover:text-accent-secondary transition-colors duration-300">
-            <span>Explore Project</span>
-            <motion.div
-              animate={isHovered ? { x: 8 } : { x: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <FaArrowRight size={16} />
-            </motion.div>
+        <div className={`p-6 sm:p-8 flex flex-col flex-grow relative`}>
+          {/* Gradient overlay on hover */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.08))",
+            }}
+          />
+
+          {/* Project Content */}
+          <div className="relative z-10 flex-grow">
+            <div className="flex items-center justify-between mb-4">
+              <motion.h3
+                className={`font-heading ${isFeatured ? "text-2xl sm:text-3xl" : "text-xl"} font-bold text-text-primary leading-tight group-hover:text-accent-primary transition-colors duration-300`}
+              >
+                {project.name}
+              </motion.h3>
+              <div className={isFeatured ? "lg:block" : "hidden md:block"}>
+                <FaExternalLinkAlt className="text-text-secondary/40 group-hover:text-accent-primary transition-colors" size={18} />
+              </div>
+            </div>
+            
+            <p className={`font-body text-text-secondary mb-6 ${isFeatured ? "text-base leading-relaxed" : "text-sm leading-relaxed line-clamp-3"}`}>
+              {project.description}
+            </p>
+
+            {/* Technologies (Large Screen) */}
+            <div className={`flex flex-wrap gap-2 mb-10 ${isFeatured ? "" : "hidden md:flex"}`}>
+              {project.technologies.map((tech, techIndex) => (
+                <span
+                  key={techIndex}
+                  className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/5 text-text-secondary border border-white/10 group-hover:border-accent-primary/40 transition-all duration-300"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
-        </motion.div>
+
+          {/* View Details Button */}
+          <motion.div
+            className="mt-auto relative z-10"
+            animate={isHovered ? { x: 10 } : { x: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="inline-flex items-center gap-3 text-accent-primary font-bold text-sm tracking-widest uppercase">
+              <span>Explore Case Study</span>
+              <FaArrowRight size={16} />
+            </div>
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );
@@ -159,38 +132,9 @@ const ProjectCard = ({ project, index, onClick, isFeatured }) => {
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const projects = [
-    {
-      name: "Web Game",
-      description:
-        "An interactive web-based game featuring smooth animations, responsive controls, and optimized performance for a seamless gaming experience.",
-      technologies: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
-      liveLink: "https://web-game-olive-six.vercel.app", // Aapka original Vercel link
-      featured: true,
-    },
-    {
-      id: 2,
-      name: "Laravel REST API",
-      description:
-        "Secure backend API for web applications with robust authentication and authorization mechanisms.",
-      technologies: ["Laravel", "MySQL"],
-      liveLink: "#",
-      featured: false,
-    },
-    {
-      id: 3,
-      name: "React Dashboard",
-      description:
-        "Modern admin dashboard with dynamic data visualization and interactive charts.",
-      technologies: ["React JS", "Tailwind CSS"],
-      liveLink: "#",
-      featured: false,
-    },
-  ];
-
   // Separate featured and regular projects
-  const featuredProject = projects.find((p) => p.featured);
-  const regularProjects = projects.filter((p) => !p.featured);
+  const featuredProject = projectData.find((p) => p.featured);
+  const regularProjects = projectData.filter((p) => !p.featured);
 
   return (
     <section id="projects" className="py-32 relative">
@@ -274,7 +218,7 @@ const Projects = () => {
             initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
             animate={{ opacity: 1, backdropFilter: "blur(10px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80"
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
@@ -282,12 +226,12 @@ const Projects = () => {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.8, y: 50, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="glass-dark rounded-3xl p-10 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-accent-primary/30 relative border border-white/10"
+              className="glass-dark rounded-[2.5rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-accent-primary/30 relative border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close button */}
               <motion.button
-                className="absolute top-6 right-6 w-12 h-12 glass-premium rounded-2xl flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300"
+                className="absolute top-6 right-6 w-12 h-12 glass-premium rounded-2xl flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300 z-50"
                 onClick={() => setSelectedProject(null)}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -295,59 +239,73 @@ const Projects = () => {
                 <FaTimes size={20} />
               </motion.button>
 
-              {/* Project header */}
-              <div className="flex items-start gap-6 mb-8">
-                <motion.div
-                  className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center shadow-lg shadow-accent-primary/40 flex-shrink-0"
-                  initial={{ scale: 0.8, rotate: -10 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.2, type: "spring" }}
-                >
-                  <FaRocket className="text-white text-2xl" />
-                </motion.div>
-                <div>
-                  <h3 className="font-heading text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                    {selectedProject.name}
-                  </h3>
-                  <p className="text-gray-600 dark:text-text-secondary text-base leading-relaxed">
+              <div className="flex flex-col md:flex-row h-full">
+                {/* Modal Image */}
+                <div className="md:w-1/2 h-64 md:h-auto relative">
+                  <img
+                    src={selectedProject.image}
+                    alt={selectedProject.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent md:bg-gradient-to-b md:from-transparent md:to-black/20" />
+                </div>
+
+                {/* Modal Content */}
+                <div className="md:w-1/2 p-8 sm:p-12">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center shadow-lg shadow-accent-primary/40">
+                      <FaRocket className="text-white text-xl" />
+                    </div>
+                    <h3 className="font-heading text-3xl font-bold text-white">
+                      {selectedProject.name}
+                    </h3>
+                  </div>
+
+                  <p className="text-text-secondary text-base leading-relaxed mb-8">
                     {selectedProject.description}
                   </p>
-                </div>
-              </div>
 
-              {/* Technologies */}
-              <div className="mb-10">
-                <h4 className="font-heading font-semibold text-gray-900 dark:text-white mb-4 text-lg">
-                  Technologies Used
-                </h4>
-                <div className="flex flex-wrap gap-3">
-                  {selectedProject.technologies.map((tech, index) => (
-                    <motion.span
-                      key={tech}
-                      initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      transition={{ delay: 0.3 + index * 0.08, duration: 0.4 }}
-                      className="px-4 py-2.5 glass-premium rounded-xl text-sm font-medium text-accent-primary border border-accent-primary/30 hover:bg-white/10 transition-all duration-300"
+                  {/* Technologies */}
+                  <div className="mb-10">
+                    <h4 className="font-heading font-semibold text-white mb-4 text-lg">
+                      Technologies Used
+                    </h4>
+                    <div className="flex flex-wrap gap-3">
+                      {selectedProject.technologies.map((tech, index) => (
+                        <span
+                          key={tech}
+                          className="px-4 py-2 glass-premium rounded-xl text-xs font-medium text-accent-primary border border-accent-primary/30"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <motion.a
+                      href={selectedProject.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 inline-flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-tertiary rounded-xl font-heading font-semibold text-white shadow-lg hover:shadow-2xl hover:shadow-accent-primary/40 transition-all duration-300"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                     >
-                      {tech}
-                    </motion.span>
-                  ))}
+                      <FaExternalLinkAlt size={16} />
+                      Live Demo
+                    </motion.a>
+                    <motion.button
+                      className="flex-1 px-6 py-4 glass-premium rounded-xl font-heading font-semibold text-text-primary border border-white/10 hover:border-accent-primary/50 transition-all duration-300"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => setSelectedProject(null)}
+                    >
+                      Close
+                    </motion.button>
+                  </div>
                 </div>
               </div>
-
-              {/* Live demo button */}
-              <motion.a
-                href={selectedProject.liveLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-tertiary rounded-xl font-heading font-semibold text-white shadow-lg hover:shadow-2xl hover:shadow-accent-primary/40 transition-all duration-300 w-full sm:w-auto"
-                whileHover={{ scale: 1.05, y: -3 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FaExternalLinkAlt size={18} />
-                View Live Project
-                <FaArrowRight size={18} />
-              </motion.a>
             </motion.div>
           </motion.div>
         )}
