@@ -12,7 +12,9 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
+
 
 :root {
   --bg-primary: #0a0a0f;
@@ -127,6 +129,7 @@ body {
 
 /* Particle animation */
 @keyframes float-particle {
+
   0%,
   100% {
     transform: translateY(0px) translateX(0px);
@@ -251,4 +254,93 @@ body {
   border-radius: 1rem;
   border: none;
   box-shadow: none;
+}
+
+/* Animated text gradient shine */
+@keyframes textShine {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.highlight-shine {
+  background-size: 200% 200%;
+  animation: textShine 6s ease infinite;
+}
+
+/* Sci-fi overlay scanlines */
+.scanlines {
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+      rgba(0, 0, 0, 0.3) 50%);
+  background-size: 100% 4px;
+}
+
+/* Pulsing blink indicator */
+@keyframes scifiBlink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.blink-indicator {
+  animation: scifiBlink 2s infinite;
+}
+
+/* Infinite slow spin for radar */
+@keyframes scifiSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: scifiSpin 10s linear infinite;
+}
+
+/* Hero split background */
+.hero-split-bg {
+  clip-path: none;
+}
+@media (min-width: 1024px) {
+  .hero-split-bg {
+    clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
+
+/* Premium float effects */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1deg);
+  }
+}
+@keyframes float-slower {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-1deg);
+  }
+}
+.animate-float-slow {
+  animation: float-slow 5s ease-in-out infinite;
+}
+.animate-float-slower {
+  animation: float-slower 6s ease-in-out infinite;
 }

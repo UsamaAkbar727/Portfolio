@@ -15,18 +15,12 @@ const Footer = () => {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center text-center gap-8"
         >
-          <motion.div 
+          <motion.div
             className="relative"
             whileHover={{ y: -5 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="flex items-center justify-center rounded-3xl border-2 border-gray-200/60 dark:border-white/15 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl px-10 py-8 shadow-2xl shadow-slate-900/10 dark:shadow-accent-primary/10">
-              <img
-                src="/assets/image.png"
-                alt="JuTt Tech Solutions logo"
-                className="h-24 object-contain drop-shadow-sm rounded-xl"
-              />
-            </div>
+
           </motion.div>
 
           <motion.p

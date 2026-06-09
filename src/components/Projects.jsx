@@ -1,317 +1,282 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  FaExternalLinkAlt,
-  FaCode,
-  FaRocket,
-  FaTimes,
-  FaArrowRight,
-} from "react-icons/fa";
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
 import { projects as projectData } from "../data/projects";
+import { FI, Tilt, highlightText } from "./AnimationHelpers";
 
-const ProjectCard = ({ project, index, onClick, isFeatured }) => {
-  const [isHovered, setIsHovered] = useState(false);
+// Ultra-Premium Interactive Project Card
+function ProjectCard({ project, index, total }) {
+  const ref = useRef(null);
+  const cardRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+
+  // Deep 3D stacking effect on scroll
+  const targetScale = 1 - (total - 1 - index) * 0.05;
+  const scale = useTransform(scrollYProgress, [0, 1], [1, targetScale]);
+  const scrollY = useTransform(scrollYProgress, [0, 1], ["0%", "-5%"]);
+  const opacity = useTransform(scrollYProgress, [0.9, 1], [1, 0.3]);
+
+  // Vibrant Neon Color Palette
+  const projectColors = {
+    1: "#FF0055", // Neon Pink
+    2: "#00E5FF", // Neon Cyan
+    3: "#00FF66", // Neon Green
+    4: "#FF7700"  // Neon Orange
+  };
+  const activeColor = projectColors[project.id] || "#B600A8";
+
+  // 3D Tilt & Spotlight Mouse Tracking
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const cursorX = useMotionValue(-1000);
+  const cursorY = useMotionValue(-1000);
+
+  const rotateX = useSpring(useTransform(mouseY, [-20, 20], [6, -6]), { damping: 40, stiffness: 200 });
+  const rotateY = useSpring(useTransform(mouseX, [-20, 20], [-6, 6]), { damping: 40, stiffness: 200 });
+  
+  // Parallax elements inside card
+  const parallaxX = useSpring(useTransform(mouseX, [-20, 20], [-25, 25]), { damping: 40, stiffness: 150 });
+  const parallaxY = useSpring(useTransform(mouseY, [-20, 20], [-25, 25]), { damping: 40, stiffness: 150 });
+  
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const { left, top, width, height } = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - left;
+    const y = e.clientY - top;
+    
+    // Spotlight position
+    cursorX.set(x);
+    cursorY.set(y);
+    
+    // Tilt calculation (-20 to 20 range for dramatic but smooth effect)
+    mouseX.set((x - width / 2) / 25);
+    mouseY.set((y - height / 2) / 25);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+    cursorX.set(-1000);
+    cursorY.set(-1000);
+  };
+
+  // Dynamic Spotlight background
+  const spotlightBackground = useMotionTemplate`radial-gradient(circle 600px at ${cursorX}px ${cursorY}px, ${activeColor}15, transparent 80%)`;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.12,
-        type: "spring",
-        stiffness: 100,
-      }}
-      whileHover={{
-        y: -12,
-        transition: { duration: 0.3 },
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className={`group cursor-pointer ${isFeatured ? "md:col-span-2 lg:col-span-2" : "col-span-1"}`}
-    >
-      <div
-        className={`glass-premium rounded-[2rem] h-full flex flex-col transition-all duration-500 hover:bg-white/8 hover:border-accent-primary/30 relative overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-accent-primary/20 backdrop-blur-xl border border-white/10`}
-        onClick={onClick}
+    <div ref={ref} className="h-[100vh] flex items-center justify-center sticky top-0 w-full perspective-[2000px]">
+      
+      {/* Intense Ambient Background Glow emitted by the card */}
+      <motion.div 
+        style={{ scale, opacity, backgroundColor: activeColor }}
+        className="absolute w-[80%] h-[60%] rounded-full blur-[150px] pointer-events-none mix-blend-screen opacity-30 transition-opacity duration-1000"
+      />
+
+      <motion.div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          scale,
+          y: scrollY,
+          opacity,
+          rotateX,
+          rotateY,
+          boxShadow: `0 40px 100px -20px rgba(0,0,0,1), 0 0 60px -15px ${activeColor}40`
+        }}
+        className="relative w-full max-w-[1400px] h-[85vh] rounded-[3rem] sm:rounded-[4rem] bg-[#050505]/80 backdrop-blur-3xl border border-white/5 overflow-hidden group/card transform-gpu"
       >
-        {/* Project Image Preview */}
-        <div className={`relative overflow-hidden ${isFeatured ? "h-56 sm:h-64" : "h-48"}`}>
-          <motion.img
-            src={project.image}
-            alt={project.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            animate={isHovered ? { scale: 1.1 } : { scale: 1 }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
-          
-          {/* Featured Tag */}
-          {isFeatured && (
-            <div className="absolute top-6 left-6 z-20">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="px-5 py-2.5 rounded-2xl bg-accent-primary/90 text-white text-xs font-bold tracking-widest uppercase backdrop-blur-md shadow-lg border border-white/20 flex items-center gap-2"
-              >
-                <FaRocket className="animate-pulse" />
-                Featured Project
-              </motion.div>
-            </div>
-          )}
+        {/* Interactive Spotlight following cursor */}
+        <motion.div
+          className="absolute inset-0 z-0 pointer-events-none mix-blend-screen"
+          style={{ background: spotlightBackground }}
+        />
 
-          {/* Technology Pills on Image (Mobile/Small Screen) */}
-          <div className={`absolute bottom-4 left-4 right-4 flex flex-wrap gap-2 z-20 ${isFeatured ? "lg:hidden" : "md:hidden"}`}>
-            {project.technologies.slice(0, 3).map((tech, techIndex) => (
-              <span key={techIndex} className="px-3 py-1.5 text-[10px] font-bold rounded-lg bg-black/60 text-white backdrop-blur-md border border-white/10">
-                {tech}
-              </span>
-            ))}
-          </div>
+        {/* Animated Border Gradient Shine */}
+        <div className="absolute inset-0 p-[1px] rounded-[3rem] sm:rounded-[4rem] pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 z-10">
+          <div className="absolute inset-0 rounded-[3rem] sm:rounded-[4rem] bg-gradient-to-r from-transparent via-white/40 to-transparent animate-spin-slow" 
+               style={{ background: `conic-gradient(from 0deg, transparent, ${activeColor}80, transparent)` }} />
         </div>
 
-        <div className={`p-6 sm:p-8 flex flex-col flex-grow relative`}>
-          {/* Gradient overlay on hover */}
-          <motion.div
-            className="absolute inset-0 pointer-events-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(139, 92, 246, 0.08))",
-            }}
-          />
+        {/* Inner Card Background Overlay */}
+        <div className="absolute inset-[1px] rounded-[calc(3rem-1px)] sm:rounded-[calc(4rem-1px)] bg-[#07070a]/90 z-0" />
+        
+        {/* Extreme Noise Texture Overlay */}
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-overlay z-10" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
 
-          {/* Project Content */}
-          <div className="relative z-10 flex-grow">
-            <div className="flex items-center justify-between mb-4">
-              <motion.h3
-                className={`font-heading ${isFeatured ? "text-2xl sm:text-3xl" : "text-xl"} font-bold text-text-primary leading-tight group-hover:text-accent-primary transition-colors duration-300`}
-              >
-                {project.name}
-              </motion.h3>
-              <div className={isFeatured ? "lg:block" : "hidden md:block"}>
-                <FaExternalLinkAlt className="text-text-secondary/40 group-hover:text-accent-primary transition-colors" size={18} />
-              </div>
-            </div>
-            
-            <p className={`font-body text-text-secondary mb-6 ${isFeatured ? "text-base leading-relaxed" : "text-sm leading-relaxed line-clamp-3"}`}>
-              {project.description}
-            </p>
-
-            {/* Technologies (Large Screen) */}
-            <div className={`flex flex-wrap gap-2 mb-10 ${isFeatured ? "" : "hidden md:flex"}`}>
-              {project.technologies.map((tech, techIndex) => (
-                <span
-                  key={techIndex}
-                  className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/5 text-text-secondary border border-white/10 group-hover:border-accent-primary/40 transition-all duration-300"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* View Details Button */}
-          <motion.div
-            className="mt-auto relative z-10"
-            animate={isHovered ? { x: 10 } : { x: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="inline-flex items-center gap-3 text-accent-primary font-bold text-sm tracking-widest uppercase">
-              <span>Explore Case Study</span>
-              <FaArrowRight size={16} />
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState(null);
-
-  // Separate featured and regular projects
-  const featuredProject = projectData.find((p) => p.featured);
-  const regularProjects = projectData.filter((p) => !p.featured);
-
-  return (
-    <section id="projects" className="py-32 relative">
-      {/* Enhanced background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute top-1/3 -left-20 w-96 h-96 bg-accent-primary/15 rounded-full blur-3xl"
-          animate={{
-            y: [0, 50, 0],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-1/3 -right-20 w-96 h-96 bg-accent-tertiary/15 rounded-full blur-3xl"
-          animate={{
-            y: [0, -50, 0],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{ duration: 8, repeat: Infinity, delay: 2 }}
-        />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+        {/* Massive 3D Background Number with Parallax */}
+        <motion.div 
+             style={{ x: parallaxX, y: parallaxY, WebkitTextStroke: `4px ${activeColor}`, color: 'transparent' }}
+             className="absolute -top-20 -right-10 z-0 text-[300px] md:text-[500px] font-black leading-none opacity-[0.04] group-hover/card:opacity-[0.15] transition-opacity duration-700 pointer-events-none select-none blur-[2px] group-hover/card:blur-none"
         >
-          <motion.span
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="inline-block px-4 py-2.5 glass-premium rounded-full text-sm font-semibold text-accent-primary mb-6 border border-accent-primary/20"
-          >
-            💼 Portfolio Showcase
-          </motion.span>
-
-          <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-            Featured <span className="gradient-text">Projects</span>
-          </h2>
-          <p className="text-text-secondary max-w-2xl mx-auto text-lg">
-            Explore a curated selection of my most impactful works showcasing
-            expertise in full-stack development
-          </p>
+          0{project.id}
         </motion.div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {/* Featured Project (Takes 2x2 space) */}
-          {featuredProject && (
-            <ProjectCard
-              project={featuredProject}
-              index={0}
-              onClick={() => setSelectedProject(featuredProject)}
-              isFeatured={true}
-            />
-          )}
+        {/* Card Content Layout */}
+        <div className="relative z-20 flex flex-col md:flex-row h-full">
+          
+          {/* Left Panel: Information */}
+          <div className="w-full md:w-1/2 p-8 sm:p-12 md:p-16 flex flex-col justify-between h-[50%] md:h-full border-b md:border-b-0 md:border-r border-white/10 relative overflow-hidden">
+            
+            {/* Subtle left-side scanline effect */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.02]" style={{ background: 'linear-gradient(transparent 50%, rgba(255,255,255,1) 50%)', backgroundSize: '100% 4px' }} />
 
-          {/* Regular Projects */}
-          {regularProjects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index + 1}
-              onClick={() => setSelectedProject(project)}
-              isFeatured={false}
-            />
-          ))}
-        </div>
-      </div>
+            {/* Header Area */}
+            <motion.div style={{ x: useTransform(parallaxX, v => v * 0.2), y: useTransform(parallaxY, v => v * 0.2) }}>
+              <div className="flex items-center gap-4 mb-6">
+                <span className="font-mono text-4xl sm:text-5xl font-black text-white/10 tracking-tighter shadow-sm">
+                  0{project.id}
+                </span>
+                <div className="h-[2px] w-16 bg-white/20" />
+                <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.4em] px-4 py-1.5 rounded-full bg-white/5 border border-white/20 backdrop-blur-md" style={{ color: activeColor, textShadow: `0 0 15px ${activeColor}` }}>
+                  {project.id === 1 ? "System.Active" : project.id === 2 ? "Standby.Log" : project.id === 3 ? "Backend.Ready" : "Database.Mount"}
+                </span>
+              </div>
+              
+              <h3 className="font-kanit text-5xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white mb-6 leading-[1.0] drop-shadow-2xl mix-blend-screen">
+                {project.name}
+              </h3>
+              
+              <p className="text-[#a1a1aa] font-light leading-relaxed text-sm sm:text-base md:text-lg max-w-xl group-hover/card:text-white/80 transition-colors duration-500">
+                {highlightText(project.description, project.id === 1 ? 'fullstack' : project.id === 2 ? 'frontend' : project.id === 3 ? 'backend' : 'system')}
+              </p>
+            </motion.div>
 
-      {/* Project Modal */}
-      <AnimatePresence>
-        {selectedProject && (
-          <motion.div
-            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(10px)" }}
-            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80"
-            onClick={() => setSelectedProject(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.8, y: 50, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.8, y: 50, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="glass-dark rounded-[2.5rem] max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-accent-primary/30 relative border border-white/10"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close button */}
-              <motion.button
-                className="absolute top-6 right-6 w-12 h-12 glass-premium rounded-2xl flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300 z-50"
-                onClick={() => setSelectedProject(null)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FaTimes size={20} />
-              </motion.button>
-
-              <div className="flex flex-col md:flex-row h-full">
-                {/* Modal Image */}
-                <div className="md:w-1/2 h-64 md:h-auto relative">
-                  <img
-                    src={selectedProject.image}
-                    alt={selectedProject.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent md:bg-gradient-to-b md:from-transparent md:to-black/20" />
-                </div>
-
-                {/* Modal Content */}
-                <div className="md:w-1/2 p-8 sm:p-12">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center shadow-lg shadow-accent-primary/40">
-                      <FaRocket className="text-white text-xl" />
-                    </div>
-                    <h3 className="font-heading text-3xl font-bold text-white">
-                      {selectedProject.name}
-                    </h3>
-                  </div>
-
-                  <p className="text-text-secondary text-base leading-relaxed mb-8">
-                    {selectedProject.description}
-                  </p>
-
-                  {/* Technologies */}
-                  <div className="mb-10">
-                    <h4 className="font-heading font-semibold text-white mb-4 text-lg">
-                      Technologies Used
-                    </h4>
-                    <div className="flex flex-wrap gap-3">
-                      {selectedProject.technologies.map((tech, index) => (
-                        <span
-                          key={tech}
-                          className="px-4 py-2 glass-premium rounded-xl text-xs font-medium text-accent-primary border border-accent-primary/30"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <motion.a
-                      href={selectedProject.liveLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 inline-flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-accent-primary via-accent-secondary to-accent-tertiary rounded-xl font-heading font-semibold text-white shadow-lg hover:shadow-2xl hover:shadow-accent-primary/40 transition-all duration-300"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+            {/* Tech Stack & Action */}
+            <motion.div style={{ x: useTransform(parallaxX, v => v * 0.1), y: useTransform(parallaxY, v => v * 0.1) }} className="mt-8 flex flex-col gap-8">
+              <div>
+                <span className="text-[10px] uppercase tracking-[0.3em] font-black text-white/40 block mb-4">Core Tech</span>
+                <div className="flex flex-wrap gap-2.5">
+                  {project.technologies.map((tech, techIdx) => (
+                    <span
+                      key={techIdx}
+                      className="px-5 py-2.5 text-xs font-black uppercase tracking-widest rounded-xl bg-black/80 text-white/60 border border-white/10 backdrop-blur-xl group-hover/card:border-white/30 transition-all duration-300 hover:text-white hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:-translate-y-1"
                     >
-                      <FaExternalLinkAlt size={16} />
-                      Live Demo
-                    </motion.a>
-                    <motion.button
-                      className="flex-1 px-6 py-4 glass-premium rounded-xl font-heading font-semibold text-text-primary border border-white/10 hover:border-accent-primary/50 transition-all duration-300"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => setSelectedProject(null)}
-                    >
-                      Close
-                    </motion.button>
-                  </div>
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
+
+              {project.liveLink !== "#" ? (
+                <a
+                  href={project.liveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-fit group/btn relative overflow-hidden rounded-full bg-white text-black font-black uppercase tracking-[0.2em] px-10 py-5 text-xs sm:text-sm transition-all duration-500 flex items-center gap-4 hover:shadow-[0_0_40px_rgba(255,255,255,0.6)]"
+                >
+                  <span className="relative z-10 transition-transform duration-500 group-hover/btn:translate-x-1">Launch System</span>
+                  <div className="relative z-10 w-8 h-8 rounded-full bg-black/10 flex items-center justify-center transition-transform duration-500 group-hover/btn:rotate-45 group-hover/btn:scale-110">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-0 group-hover/btn:opacity-100 group-hover/btn:animate-shimmer" />
+                </a>
+              ) : (
+                <div className="w-fit rounded-full border-2 border-white/10 bg-[#0A0A0A] text-white/30 font-black uppercase tracking-[0.2em] px-10 py-5 text-xs sm:text-sm flex items-center gap-4 cursor-not-allowed">
+                  Secured Local
+                </div>
+              )}
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+          </div>
+
+          {/* Right Panel: Stunning Visual with Parallax */}
+          <div className="w-full md:w-1/2 h-[50%] md:h-full p-4 sm:p-8 md:p-12 flex items-center justify-center relative overflow-hidden group/img">
+            {/* Deep Ambient Image Glow - Lightened so images are clear */}
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-transparent z-10 pointer-events-none" />
+            
+            <motion.div 
+              style={{ x: useTransform(parallaxX, v => v * -0.5), y: useTransform(parallaxY, v => v * -0.5) }}
+              className="w-full h-full flex items-center justify-center relative z-0"
+            >
+              {project.id === 1 ? (
+                <div className="relative w-full h-full max-h-[550px] flex items-center justify-center z-0">
+                  <motion.img
+                    src={project.image}
+                    alt={project.name}
+                    className="max-w-full max-h-full object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.9)] transition-transform duration-700"
+                    style={{ filter: `drop-shadow(0 0 30px ${activeColor}40)` }}
+                    whileHover={{ scale: 1.15, rotateZ: 2 }}
+                    loading="lazy"
+                  />
+                </div>
+              ) : (
+                <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden border border-white/20 shadow-[0_40px_80px_rgba(0,0,0,0.9)] z-0 group-hover/img:border-white/40 transition-colors duration-700">
+                  <motion.img
+                    src={project.image}
+                    alt={project.name}
+                    className="w-full h-full object-cover origin-center"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.7 }}
+                    loading="lazy"
+                  />
+                  {/* Removed the blur overlay so the image is fully clear at all times */}
+                </div>
+              )}
+            </motion.div>
+          </div>
+
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+export default function Projects() {
+  return (
+    <section id="projects" className="bg-[#030303] py-24 sm:py-32 relative z-10 overflow-hidden">
+      
+      {/* Deep Space Background Grid */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-20"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
+          backgroundSize: '100px 100px',
+          backgroundPosition: 'center center'
+        }}
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,#030303_80%)] pointer-events-none" />
+
+      {/* Massive Header */}
+      <div className="relative z-20 flex flex-col items-center justify-center mb-10 sm:mb-20 min-h-[40vh] px-4">
+        <FI delay={0} y={40} className="w-full flex flex-col items-center">
+          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse" />
+            <span className="text-xs sm:text-sm font-bold tracking-[0.2em] uppercase text-white/80">
+              Selected Works
+            </span>
+          </div>
+          
+          <div className="relative">
+            <h2 className="text-white font-black uppercase text-center leading-none tracking-tighter" style={{ fontSize: 'clamp(4rem, 15vw, 200px)' }}>
+              Projects
+            </h2>
+            {/* Glowing Text Reflection */}
+            <h2 className="absolute top-0 left-0 w-full text-transparent font-black uppercase text-center leading-none tracking-tighter blur-2xl opacity-50" style={{ fontSize: 'clamp(4rem, 15vw, 200px)', WebkitTextStroke: '4px #00E5FF' }}>
+              Projects
+            </h2>
+          </div>
+        </FI>
+      </div>
+
+      <div className="w-full px-4 sm:px-6 md:px-10 relative z-30">
+        {projectData.map((project, idx) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+            index={idx}
+            total={projectData.length}
+          />
+        ))}
+      </div>
+      
+      {/* Bottom Spacer for smooth scroll exit */}
+      <div className="h-[20vh] w-full" />
     </section>
   );
-};
-
-export default Projects;
+}

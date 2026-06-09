@@ -12,15 +12,20 @@ import {
   FaEnvelope,
   FaSun,
   FaMoon,
+  FaServer,
+  FaBriefcase,
 } from 'react-icons/fa';
 
 const navLinks = [
   { name: 'Home', href: '#home', icon: FaHome },
   { name: 'About', href: '#about', icon: FaUser },
+  { name: 'Services', href: '#services', icon: FaServer },
   { name: 'Skills', href: '#skills', icon: FaCode },
+  { name: 'Journey', href: '#journey', icon: FaBriefcase },
   { name: 'Projects', href: '#projects', icon: FaProjectDiagram },
   { name: 'Contact', href: '#contact', icon: FaEnvelope },
 ];
+
 
 const Navbar = ({ theme, onToggleTheme }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -69,29 +74,29 @@ const Navbar = ({ theme, onToggleTheme }) => {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-        ? 'glass-premium py-3 shadow-lg shadow-accent-primary/10'
-        : 'py-5 bg-transparent'
+      initial={{ y: -100, x: '-50%' }}
+      animate={{ y: 0, x: '-50%' }}
+      transition={{ duration: 0.8, type: 'spring', bounce: 0.25 }}
+      className={`fixed left-1/2 z-50 transition-all duration-700 rounded-full border ${isScrolled
+        ? 'top-4 w-[90%] md:w-[70%] max-w-4xl bg-white/5 dark:bg-black/20 border-white/20 shadow-[0_8px_32px_0_rgba(99,102,241,0.2)] backdrop-blur-3xl py-2'
+        : 'top-6 w-[95%] max-w-5xl bg-white/5 dark:bg-black/10 border-white/10 shadow-lg py-3 backdrop-blur-xl'
         }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <motion.a
             href="#home"
             onClick={(e) => handleNavClick(e, '#home')}
-            className="font-heading text-xl sm:text-2xl font-bold gradient-text relative group"
+            className="font-heading text-xl sm:text-2xl font-extrabold highlight-shine bg-clip-text text-transparent bg-gradient-to-r from-accent-primary via-white to-accent-secondary relative group drop-shadow-lg"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Usama JutT
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-accent-primary to-accent-secondary group-hover:w-full transition-all duration-300" />
+            <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-accent-primary to-accent-secondary group-hover:w-full transition-all duration-500 shadow-[0_0_15px_rgba(99,102,241,0.8)] rounded-full" />
           </motion.a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = activeSection === link.href.slice(1);
@@ -102,44 +107,43 @@ const Navbar = ({ theme, onToggleTheme }) => {
                   key={link.name}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`relative px-4 py-2 rounded-lg font-body text-sm uppercase tracking-wider transition-all duration-300 group ${isActive
-                    ? 'text-white'
-                    : 'text-text-secondary hover:text-white'
+                  className={`relative px-4 py-2 rounded-full font-body text-sm tracking-wide transition-all duration-300 group ${isActive
+                    ? 'font-bold text-white'
+                    : 'font-medium text-text-secondary hover:text-white'
                     }`}
-                  whileHover={{ y: -2 }}
+                  whileHover={{ y: -2, scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <span className="flex items-center gap-2 relative z-10">
-                    <Icon size={14} />
+                  <span className={`flex items-center relative z-10 transition-all duration-300 ${isActive ? 'drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]' : ''}`}>
                     {link.name}
                   </span>
 
-                  {/* Active indicator with enhanced animation */}
+                  {/* Active indicator with ultra-premium glass pill */}
                   {isActive && (
                     <motion.div
                       layoutId="activeNav"
-                      className="absolute inset-0 bg-gradient-to-r from-accent-primary/25 to-accent-secondary/25 rounded-lg border border-accent-primary/40 shadow-lg shadow-accent-primary/20"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      className="absolute inset-0 bg-white/10 dark:bg-white/10 rounded-full border border-white/20 shadow-[inset_0_0_15px_rgba(255,255,255,0.1),0_0_20px_rgba(99,102,241,0.3)] backdrop-blur-md"
+                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                     />
                   )}
 
-                  {/* Hover gradient */}
+                  {/* Hover gradient glow */}
                   {!isActive && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-accent-primary/0 to-accent-secondary/0 group-hover:from-accent-primary/15 group-hover:to-accent-secondary/15 rounded-lg transition-all duration-300" />
+                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 rounded-full transition-all duration-300 shadow-[inset_0_0_0_1px_rgba(255,255,255,0)] group-hover:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)]" />
                   )}
                 </motion.a>
               );
             })}
           </div>
 
-          {/* Theme toggle - Desktop */}
-          <div className="hidden md:flex items-center space-x-3">
+          {/* Theme toggle & Social - Desktop */}
+          <div className="hidden md:flex items-center space-x-2">
             <motion.button
               type="button"
               onClick={onToggleTheme}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300 group"
-              whileHover={{ scale: 1.1, y: -3 }}
+              className="w-9 h-9 bg-white/5 border border-transparent rounded-full flex items-center justify-center text-text-secondary hover:text-white hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all duration-300 group"
+              whileHover={{ scale: 1.15, y: -2 }}
               whileTap={{ scale: 0.9 }}
             >
               {theme === 'dark' ? <FaSun size={18} /> : <FaMoon size={18} />}
@@ -151,8 +155,8 @@ const Navbar = ({ theme, onToggleTheme }) => {
               href="https://github.com/UsamaAkbar727"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300 group"
-              whileHover={{ scale: 1.15, y: -3 }}
+              className="w-9 h-9 bg-white/5 border border-transparent rounded-full flex items-center justify-center text-text-secondary hover:text-white hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all duration-300 group"
+              whileHover={{ scale: 1.15, y: -2 }}
               whileTap={{ scale: 0.9 }}
             >
               <FaGithub size={18} className="group-hover:rotate-12 transition-transform duration-300" />
@@ -161,8 +165,8 @@ const Navbar = ({ theme, onToggleTheme }) => {
               href="https://wa.me/923098643058"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300 group"
-              whileHover={{ scale: 1.15, y: -3 }}
+              className="w-9 h-9 bg-white/5 border border-transparent rounded-full flex items-center justify-center text-text-secondary hover:text-white hover:bg-white/10 hover:border-green-400/50 hover:shadow-[0_0_20px_rgba(74,222,128,0.2)] transition-all duration-300 group"
+              whileHover={{ scale: 1.15, y: -2 }}
               whileTap={{ scale: 0.9 }}
             >
               <FaWhatsapp size={18} className="group-hover:text-green-500 transition-colors duration-300" />
@@ -171,23 +175,23 @@ const Navbar = ({ theme, onToggleTheme }) => {
 
           {/* Mobile Theme Toggle */}
           <motion.button
-            className="md:hidden w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white transition-all duration-300 hover:border-accent-primary/50 mr-2"
+            className="md:hidden w-9 h-9 glass rounded-full flex items-center justify-center text-text-secondary hover:text-white transition-all duration-300 hover:border-white/40 mr-2"
             onClick={onToggleTheme}
             whileTap={{ scale: 0.9 }}
             type="button"
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
-            {theme === 'dark' ? <FaSun size={20} /> : <FaMoon size={20} />}
+            {theme === 'dark' ? <FaSun size={16} /> : <FaMoon size={16} />}
           </motion.button>
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="md:hidden w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white transition-all duration-300 hover:border-accent-primary/50"
+            className="md:hidden w-9 h-9 glass rounded-full flex items-center justify-center text-text-secondary hover:text-white transition-all duration-300 hover:border-white/40"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileTap={{ scale: 0.9 }}
             type="button"
           >
-            {isMobileMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+            {isMobileMenuOpen ? <FaTimes size={16} /> : <FaBars size={16} />}
           </motion.button>
 
         </div>
