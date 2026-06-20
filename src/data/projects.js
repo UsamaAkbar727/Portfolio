@@ -19,20 +19,20 @@ export const projects = [
   },
   {
     id: 3,
-    name: 'Laravel REST API',
-    description: 'Secure backend API for web applications with robust authentication and authorization mechanisms.',
-    technologies: ['Laravel', 'MySQL', 'PHP'],
-    liveLink: '#',
-    image: '/images/laravel_api.png',
+    name: 'Blood Bank Management System',
+    description: 'A responsive web application that streamlines blood donor registration, manages real-time blood group inventory, and connects donors with recipients in emergencies.',
+    technologies: ['React JS', 'Tailwind CSS', 'Node.js', 'MongoDB'],
+    liveLink: 'https://blood-bank-managment-system-8n1m.vercel.app/',
+    image: '/images/blood_bank.png',
     featured: false
   },
   {
     id: 4,
-    name: 'React Dashboard',
-    description: 'Modern admin dashboard with dynamic data visualization and interactive charts.',
-    technologies: ['React JS', 'Tailwind CSS', 'Recharts'],
-    liveLink: '#',
-    image: '/images/react_dashboard.png',
+    name: "JATT's CollectioNs",
+    description: 'A modern e-commerce storefront featuring product collections, interactive search, item categorization, and dynamic cart/wishlist management.',
+    technologies: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
+    liveLink: 'https://preview-chat-2fe04bc2-ea8a-4920-9348-61110bfa7555.space-z.ai/#',
+    image: '/images/shopping_store.png',
     featured: false
   }
 ];

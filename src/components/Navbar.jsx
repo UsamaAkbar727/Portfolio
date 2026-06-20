@@ -136,18 +136,8 @@ const Navbar = ({ theme, onToggleTheme }) => {
             })}
           </div>
 
-          {/* Theme toggle & Social - Desktop */}
+          {/* Social Icons - Desktop */}
           <div className="hidden md:flex items-center space-x-2">
-            <motion.button
-              type="button"
-              onClick={onToggleTheme}
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="w-9 h-9 bg-white/5 border border-transparent rounded-full flex items-center justify-center text-text-secondary hover:text-white hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all duration-300 group"
-              whileHover={{ scale: 1.15, y: -2 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              {theme === 'dark' ? <FaSun size={18} /> : <FaMoon size={18} />}
-            </motion.button>
 
             {/* Social Icons - Desktop */}
 
@@ -172,17 +162,6 @@ const Navbar = ({ theme, onToggleTheme }) => {
               <FaWhatsapp size={18} className="group-hover:text-green-500 transition-colors duration-300" />
             </motion.a>
           </div>
-
-          {/* Mobile Theme Toggle */}
-          <motion.button
-            className="md:hidden w-9 h-9 glass rounded-full flex items-center justify-center text-text-secondary hover:text-white transition-all duration-300 hover:border-white/40 mr-2"
-            onClick={onToggleTheme}
-            whileTap={{ scale: 0.9 }}
-            type="button"
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            {theme === 'dark' ? <FaSun size={16} /> : <FaMoon size={16} />}
-          </motion.button>
 
           {/* Mobile Menu Button */}
           <motion.button

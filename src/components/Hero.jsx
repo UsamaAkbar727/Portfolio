@@ -114,11 +114,11 @@ const Hero = () => {
         <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_10%,transparent_100%)]" />
 
         {/* Glow Mesh Orbs */}
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#B600A8] opacity-[0.06] blur-[150px]" />
-        <div className="absolute bottom-[10%] left-[30%] w-[40%] h-[40%] rounded-full bg-[#7621B0] opacity-[0.06] blur-[130px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#B600A8] opacity-[0.06] blur-3xl" />
+        <div className="absolute bottom-[10%] left-[30%] w-[40%] h-[40%] rounded-full bg-[#7621B0] opacity-[0.06] blur-3xl" />
 
         {/* Soft, non-overwhelming glow orb directly behind the profile card */}
-        <div className="absolute top-[20%] right-[5%] w-[45%] h-[60%] rounded-full bg-gradient-to-br from-[#B600A8] via-[#7621B0] to-transparent opacity-[0.12] blur-[120px] hidden lg:block" />
+        <div className="absolute top-[20%] right-[5%] w-[45%] h-[60%] rounded-full bg-gradient-to-br from-[#B600A8] via-[#7621B0] to-transparent opacity-[0.12] blur-3xl hidden lg:block" />
 
         {/* Floating Hexagons on Left (Dark Side) */}
         <div className="absolute top-[20%] left-[10%] opacity-20 animate-bounce" style={{ animationDuration: '7s' }}>
@@ -267,8 +267,8 @@ const Hero = () => {
               <div className="absolute w-[50%] h-[50%] rounded-full border border-dashed border-[#7621B0]/40 animate-[spin_15s_linear_infinite_reverse]" />
 
               {/* Dynamic glowing blobs behind image */}
-              <div className="absolute w-64 h-64 bg-[#B600A8] rounded-full mix-blend-screen filter blur-[80px] opacity-40 animate-pulse" />
-              <div className="absolute w-56 h-56 bg-[#ec4899] rounded-full mix-blend-screen filter blur-[80px] opacity-30 translate-x-10 translate-y-10 animate-float-slow" />
+              <div className="absolute w-64 h-64 bg-[#B600A8] rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-pulse" />
+              <div className="absolute w-56 h-56 bg-[#ec4899] rounded-full mix-blend-screen filter blur-3xl opacity-30 translate-x-10 translate-y-10 animate-float-slow" />
             </div>
 
             <div className="relative z-10">

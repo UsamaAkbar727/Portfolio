@@ -225,7 +225,7 @@ const Contact = () => {
             <span className="w-2 h-2 rounded-full bg-[#ec4899] animate-pulse shadow-[0_0_10px_#ec4899]"></span>
             Initialize Connection
           </div>
-          <h2 className="font-kanit text-5xl sm:text-6xl lg:text-8xl font-black uppercase leading-none tracking-tighter text-white mb-6 relative inline-block">
+          <h2 className="font-kanit text-4xl sm:text-5xl lg:text-8xl font-black uppercase leading-none tracking-tighter text-white mb-6 relative inline-block">
             Get In <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B600A8] via-[#ec4899] to-[#7621B0] drop-shadow-[0_0_30px_rgba(236,72,153,0.5)]">Touch</span>
             {/* High-tech brackets */}
             <span className="absolute -left-8 -top-4 text-[#ec4899]/30 font-light text-4xl hidden md:block">{"["}</span>
@@ -249,8 +249,8 @@ const Contact = () => {
             />
 
             <FI delay={0.1} y={30} className="flex-grow flex flex-col justify-between h-full">
-              <Tilt className="w-full h-full p-[2px] rounded-[3rem] bg-gradient-to-b from-white/20 via-[#B600A8]/20 to-white/10 shadow-[0_0_50px_rgba(182,0,168,0.2)] group/tilt cursor-pointer">
-                <div className="rounded-[2.9rem] p-10 bg-[#0a0a0f]/90 backdrop-blur-3xl relative overflow-hidden flex flex-col justify-between h-full min-h-[500px]">
+              <Tilt className="w-full h-full p-[2px] rounded-[2rem] md:rounded-[3rem] bg-gradient-to-b from-white/20 via-[#B600A8]/20 to-white/10 shadow-[0_0_50px_rgba(182,0,168,0.2)] group/tilt cursor-pointer">
+                <div className="rounded-[calc(2rem-2px)] md:rounded-[2.9rem] p-6 sm:p-8 md:p-10 bg-[#0a0a0f]/90 backdrop-blur-3xl relative overflow-hidden flex flex-col justify-between h-full min-h-[400px] md:min-h-[500px]">
                   
                   {/* Animated Glow overlay inside card */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[#B600A8]/20 via-transparent to-[#ec4899]/10 opacity-0 group-hover/tilt:opacity-100 transition-opacity duration-700 pointer-events-none z-0" />
@@ -275,7 +275,7 @@ const Contact = () => {
                           href={info.href || undefined}
                           target={info.href ? "_blank" : undefined}
                           rel={info.href ? "noopener noreferrer" : undefined}
-                          className={`flex items-center gap-5 p-4 rounded-2xl border transition-all duration-500 relative group/item overflow-hidden ${
+                          className={`flex items-center gap-4 sm:gap-5 p-3 sm:p-4 rounded-2xl border transition-all duration-500 relative group/item overflow-hidden ${
                             info.href ? "cursor-pointer" : "cursor-default"
                           }`}
                           style={{
@@ -301,7 +301,7 @@ const Contact = () => {
                             <p className="text-[10px] font-mono text-[#D7E2EA]/40 uppercase tracking-[0.2em] leading-none mb-2">
                               {info.label}
                             </p>
-                            <p className="font-kanit font-medium text-white text-lg tracking-wide group-hover/item:text-transparent group-hover/item:bg-clip-text group-hover/item:bg-gradient-to-r group-hover/item:from-white group-hover/item:to-white/50 transition-all duration-300">
+                            <p className="font-kanit font-medium text-white text-base sm:text-lg tracking-wide group-hover/item:text-transparent group-hover/item:bg-clip-text group-hover/item:bg-gradient-to-r group-hover/item:from-white group-hover/item:to-white/50 transition-all duration-300 break-all sm:break-normal">
                               {info.value}
                             </p>
                           </div>
@@ -348,14 +348,14 @@ const Contact = () => {
           {/* RIGHT COLUMN: Ultra-Premium Animated Form Panel */}
           <div className="lg:col-span-7 flex">
             <FI delay={0.2} y={30} className="w-full flex">
-              <div className="w-full relative p-[2px] rounded-[3rem] bg-gradient-to-br from-[#B600A8]/30 via-white/5 to-[#ec4899]/30 shadow-[0_0_50px_rgba(236,72,153,0.15)] group/formcontainer">
+              <div className="w-full relative p-[2px] rounded-[2rem] md:rounded-[3rem] bg-gradient-to-br from-[#B600A8]/30 via-white/5 to-[#ec4899]/30 shadow-[0_0_50px_rgba(236,72,153,0.15)] group/formcontainer">
                 {/* Moving border light effect */}
                 <div className="absolute inset-0 rounded-[3rem] overflow-hidden">
                   <div className="absolute top-0 left-[-100%] w-full h-[2px] bg-gradient-to-r from-transparent via-[#ec4899] to-transparent animate-[shimmer_3s_infinite]" />
                   <div className="absolute bottom-0 right-[-100%] w-full h-[2px] bg-gradient-to-l from-transparent via-[#B600A8] to-transparent animate-[shimmer_3s_infinite_reverse]" />
                 </div>
 
-                <div className="rounded-[2.9rem] p-8 sm:p-12 border border-white/5 bg-[#0a0a0f]/90 backdrop-blur-3xl relative overflow-hidden flex flex-col w-full h-full">
+                <div className="rounded-[calc(2rem-2px)] md:rounded-[2.9rem] p-5 sm:p-8 md:p-12 border border-white/5 bg-[#0a0a0f]/90 backdrop-blur-3xl relative overflow-hidden flex flex-col w-full h-full">
                   
                   {/* Status Alerts */}
                   <AnimatePresence mode="wait">
@@ -442,7 +442,7 @@ const Contact = () => {
                                       setFormData({ ...formData, [e.target.name]: e.target.value });
                                       if (errors.name) setErrors({ ...errors, name: "" });
                                     }}
-                                    className="w-full pl-14 pr-6 py-5 bg-transparent text-white placeholder-white/20 focus:outline-none text-base font-light tracking-wide shadow-inner"
+                                    className="w-full pl-12 sm:pl-14 pr-4 sm:pr-6 py-4 md:py-5 bg-transparent text-white placeholder-white/20 focus:outline-none text-sm sm:text-base font-light tracking-wide shadow-inner"
                                     placeholder="Enter your name"
                                   />
                                 </div>
@@ -481,7 +481,7 @@ const Contact = () => {
                                       setFormData({ ...formData, [e.target.name]: e.target.value });
                                       if (errors.email) setErrors({ ...errors, email: "" });
                                     }}
-                                    className="w-full pl-14 pr-6 py-5 bg-transparent text-white placeholder-white/20 focus:outline-none text-base font-light tracking-wide shadow-inner"
+                                    className="w-full pl-12 sm:pl-14 pr-4 sm:pr-6 py-4 md:py-5 bg-transparent text-white placeholder-white/20 focus:outline-none text-sm sm:text-base font-light tracking-wide shadow-inner"
                                     placeholder="name@domain.com"
                                   />
                                 </div>
@@ -521,7 +521,7 @@ const Contact = () => {
                                     setFormData({ ...formData, [e.target.name]: e.target.value });
                                     if (errors.subject) setErrors({ ...errors, subject: "" });
                                   }}
-                                  className="w-full pl-14 pr-6 py-5 bg-transparent text-white placeholder-white/20 focus:outline-none text-base font-light tracking-wide shadow-inner"
+                                  className="w-full pl-12 sm:pl-14 pr-4 sm:pr-6 py-4 md:py-5 bg-transparent text-white placeholder-white/20 focus:outline-none text-sm sm:text-base font-light tracking-wide shadow-inner"
                                   placeholder="What's the mission?"
                                 />
                               </div>
@@ -560,7 +560,7 @@ const Contact = () => {
                                     setFormData({ ...formData, [e.target.name]: e.target.value });
                                     if (errors.message) setErrors({ ...errors, message: "" });
                                   }}
-                                  className="w-full pl-14 pr-6 py-6 bg-transparent text-white placeholder-white/20 focus:outline-none text-base font-light tracking-wide resize-none shadow-inner"
+                                  className="w-full pl-12 sm:pl-14 pr-4 sm:pr-6 py-4 md:py-6 bg-transparent text-white placeholder-white/20 focus:outline-none text-sm sm:text-base font-light tracking-wide resize-none shadow-inner"
                                   placeholder="Detail the parameters of your project..."
                                 />
                               </div>
@@ -586,7 +586,7 @@ const Contact = () => {
                             <motion.button
                               type="submit"
                               disabled={isSubmitting}
-                              className="w-full sm:w-auto px-12 py-6 bg-gradient-to-r from-[#B600A8] via-[#ec4899] to-[#7621B0] rounded-2xl font-kanit font-black uppercase text-sm tracking-[0.2em] text-white shadow-[0_0_40px_rgba(182,0,168,0.4)] hover:shadow-[0_0_60px_rgba(236,72,153,0.6)] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-4 relative overflow-hidden group/btn"
+                              className="w-full sm:w-auto px-8 md:px-12 py-4 md:py-6 bg-gradient-to-r from-[#B600A8] via-[#ec4899] to-[#7621B0] rounded-2xl font-kanit font-black uppercase text-sm tracking-[0.2em] text-white shadow-[0_0_40px_rgba(182,0,168,0.4)] hover:shadow-[0_0_60px_rgba(236,72,153,0.6)] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 md:gap-4 relative overflow-hidden group/btn"
                               whileHover={!isSubmitting ? { scale: 1.05 } : {}}
                               whileTap={!isSubmitting ? { scale: 0.95 } : {}}
                             >

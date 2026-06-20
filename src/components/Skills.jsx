@@ -186,7 +186,7 @@ const SkillNode = ({ skill, active, onHover, isMobile, position }) => {
 
         {/* Skill Icon Container */}
         <div
-          className="absolute inset-0 flex items-center justify-center rounded-full transition-all duration-500 z-20 overflow-hidden backdrop-blur-xl"
+          className="absolute inset-0 flex items-center justify-center rounded-full transition-all duration-500 z-20 overflow-hidden backdrop-blur-sm"
           style={{
             margin: `${stroke * 2}px`,
             background: hovered
@@ -355,12 +355,12 @@ export default function Skills() {
         <motion.div
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#B600A8] rounded-full blur-[200px] opacity-30 mix-blend-screen"
+          className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#B600A8] rounded-full blur-3xl opacity-20 mix-blend-screen"
         />
         <motion.div
           animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 5 }}
-          className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#00E5FF] rounded-full blur-[200px] opacity-30 mix-blend-screen"
+          className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#00E5FF] rounded-full blur-3xl opacity-20 mix-blend-screen"
         />
         
         {/* Central dark core to maintain contrast */}
