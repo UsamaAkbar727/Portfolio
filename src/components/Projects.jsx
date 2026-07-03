@@ -29,9 +29,22 @@ function ProjectCard({ project, index, total }) {
   const parallaxX = useSpring(useTransform(mouseX, [-20, 20], [-20, 20]), { damping: 40, stiffness: 150 });
   const parallaxY = useSpring(useTransform(mouseY, [-20, 20], [-20, 20]), { damping: 40, stiffness: 150 });
 
+  const rectRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (cardRef.current) {
+      rectRef.current = cardRef.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
-    const { left, top, width, height } = cardRef.current.getBoundingClientRect();
+    
+    if (!rectRef.current) {
+      rectRef.current = cardRef.current.getBoundingClientRect();
+    }
+
+    const { left, top, width, height } = rectRef.current;
     const x = e.clientX - left;
     const y = e.clientY - top;
 
@@ -45,6 +58,7 @@ function ProjectCard({ project, index, total }) {
   };
 
   const handleMouseLeave = () => {
+    rectRef.current = null;
     mouseX.set(0);
     mouseY.set(0);
     cursorX.set(-1000);
@@ -62,11 +76,12 @@ function ProjectCard({ project, index, total }) {
       {/* Subtle Ambient Background Glow emitted by the card */}
       <div
         style={{ backgroundColor: activeColor }}
-        className="absolute w-[60%] h-[50%] rounded-full blur-[120px] pointer-events-none mix-blend-screen opacity-[0.06]"
+        className="absolute w-[60%] h-[50%] rounded-full blur-[60px] transform-gpu pointer-events-none mix-blend-screen opacity-[0.06]"
       />
 
       <motion.div
         ref={cardRef}
+        onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{
@@ -78,7 +93,7 @@ function ProjectCard({ project, index, total }) {
       >
         {/* Interactive Spotlight following cursor */}
         <motion.div
-          className="absolute inset-0 z-0 pointer-events-none mix-blend-screen"
+          className="absolute inset-0 z-0 pointer-events-none mix-blend-screen transform-gpu"
           style={{ background: spotlightBackground }}
         />
 

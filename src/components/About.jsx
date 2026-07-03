@@ -82,16 +82,30 @@ const ExperiencePlate = ({ card, activeCard, setActiveCard }) => {
   const [hovered, setHovered] = useState(false);
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const rectRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    setHovered(true);
+    setActiveCard(card.id);
+    if (plateRef.current) {
+      rectRef.current = plateRef.current.getBoundingClientRect();
+    }
+  };
 
   const handleMouseMove = (e) => {
     const el = plateRef.current;
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    
+    if (!rectRef.current) {
+      rectRef.current = el.getBoundingClientRect();
+    }
 
-    const px = x / rect.width - 0.5;
-    const py = y / rect.height - 0.5;
+    const { left, top, width, height } = rectRef.current;
+    const x = e.clientX - left;
+    const y = e.clientY - top;
+
+    const px = x / width - 0.5;
+    const py = y / height - 0.5;
 
     const rotateX = -py * 12;
     const rotateY = px * 12;
@@ -100,15 +114,11 @@ const ExperiencePlate = ({ card, activeCard, setActiveCard }) => {
     setMousePos({ x, y });
   };
 
-  const handleMouseEnter = () => {
-    setHovered(true);
-    setActiveCard(card.id);
-  };
-
   const handleMouseLeave = () => {
     setHovered(false);
     setRotate({ x: 0, y: 0 });
     setActiveCard(null);
+    rectRef.current = null;
   };
 
   return (
@@ -232,15 +242,30 @@ const ExperiencePlate = ({ card, activeCard, setActiveCard }) => {
 
 const SystemHubCard = ({ bioTxt, technologies, stats }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const rectRef = useRef(null);
+
+  const handleMouseEnter = (e) => {
+    rectRef.current = e.currentTarget.getBoundingClientRect();
+  };
+
   const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    if (!rectRef.current) {
+      rectRef.current = e.currentTarget.getBoundingClientRect();
+    }
+    const { left, top } = rectRef.current;
+    setMousePos({ x: e.clientX - left, y: e.clientY - top });
+  };
+
+  const handleMouseLeave = () => {
+    rectRef.current = null;
   };
 
   return (
     <Tilt className="w-full h-full p-[2px] rounded-[3rem] bg-gradient-to-br from-[#B600A8]/20 via-white/5 to-[#7621B0]/20 hover:from-[#B600A8]/40 transition-colors duration-500 group/hub shadow-[0_0_40px_rgba(182,0,168,0.1)] hover:shadow-[0_0_60px_rgba(182,0,168,0.25)]">
       <div 
+        onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         className="rounded-[2.9rem] p-8 sm:p-12 bg-[#0a0a0f]/90 backdrop-blur-3xl relative overflow-hidden flex flex-col justify-between h-full min-h-[500px] z-10"
       >
         {/* Flashlight Tracking */}
@@ -364,9 +389,9 @@ export default function About() {
     >
       {/* 3D background grids & lights */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Animated Synthwave Grid */}
+        {/* Synthwave Grid (Static for high performance) */}
         <div className="absolute inset-0 opacity-[0.02] perspective-1000">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem] [transform:rotateX(60deg)_translateY(-100px)_scale(2)] origin-top animate-[grid-move_15s_linear_infinite]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem] [transform:rotateX(60deg)_translateY(-100px)_scale(2)] origin-top transform-gpu" />
         </div>
       </div>
 

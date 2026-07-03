@@ -187,34 +187,20 @@ const Contact = () => {
     <section id="contact" className="py-24 md:py-32 relative bg-[#0C0C0C] overflow-hidden">
       {/* Visual background blurred meshes & Animated Grid */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        {/* Animated Synthwave Grid */}
+        {/* Synthwave Grid (Static for high performance) */}
         <div className="absolute inset-0 opacity-[0.03] perspective-1000">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem] [transform:rotateX(60deg)_translateY(-100px)_scale(2)] origin-top animate-[grid-move_15s_linear_infinite]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem] [transform:rotateX(60deg)_translateY(-100px)_scale(2)] origin-top transform-gpu" />
         </div>
 
-        {/* Ambient Orbs */}
-        <motion.div
-          className="absolute top-0 left-0 w-[600px] h-[600px] bg-[#B600A8]/20 rounded-full blur-[150px] mix-blend-screen"
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        {/* Ambient Orbs (Static for high performance) */}
+        <div
+          className="absolute top-0 left-0 w-[600px] h-[600px] bg-[#B600A8]/15 rounded-full blur-[150px] mix-blend-screen transform-gpu"
         />
-        <motion.div
-          className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#ec4899]/15 rounded-full blur-[150px] mix-blend-screen"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            x: [0, -50, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        <div
+          className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[#ec4899]/10 rounded-full blur-[150px] mix-blend-screen transform-gpu"
         />
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#7621B0]/10 rounded-full blur-[150px] mix-blend-screen"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#7621B0]/08 rounded-full blur-[150px] mix-blend-screen transform-gpu"
         />
       </div>
 

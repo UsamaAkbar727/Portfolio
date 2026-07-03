@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { FaLaptopCode, FaServer, FaCodeBranch, FaDatabase } from 'react-icons/fa';
 import { FI, highlightText, Tilt } from './AnimationHelpers';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const services = [
   {
@@ -49,19 +49,33 @@ const ServiceCard = ({ service, index }) => {
   // State for flashlight hover effect
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const rectRef = useRef(null);
+
+  const handleMouseEnter = (e) => {
+    setIsHovered(true);
+    rectRef.current = e.currentTarget.getBoundingClientRect();
+  };
 
   const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    if (!rectRef.current) {
+      rectRef.current = e.currentTarget.getBoundingClientRect();
+    }
+    const { left, top } = rectRef.current;
+    setMousePos({ x: e.clientX - left, y: e.clientY - top });
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    rectRef.current = null;
   };
 
   return (
     <FI delay={index * 0.15} y={40}>
       <Tilt className="w-full h-full p-[2px] rounded-[3rem] bg-gradient-to-br from-white/10 via-white/5 to-transparent hover:from-white/20 transition-colors duration-500 group/card cursor-pointer shadow-2xl">
         <div 
+          onMouseEnter={handleMouseEnter}
           onMouseMove={handleMouseMove}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          onMouseLeave={handleMouseLeave}
           className="rounded-[2.9rem] p-8 sm:p-12 bg-[#0a0a0f]/90 backdrop-blur-3xl relative overflow-hidden flex flex-col justify-between h-full min-h-[420px]"
         >
           {/* FLASHLIGHT EFFECT (Follows Mouse) */}
@@ -182,27 +196,17 @@ export default function Services() {
     <section id="services" className="py-24 md:py-32 relative bg-[#0C0C0C] overflow-hidden">
       {/* Visual background blurred meshes & Animated Grid */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        {/* Animated Synthwave Grid */}
+        {/* Synthwave Grid (Static for high performance) */}
         <div className="absolute inset-0 opacity-[0.03] perspective-1000">
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem] [transform:rotateX(60deg)_translateY(-100px)_scale(2)] origin-top animate-[grid-move_15s_linear_infinite]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:4rem_4rem] [transform:rotateX(60deg)_translateY(-100px)_scale(2)] origin-top transform-gpu" />
         </div>
 
-        {/* Ambient Orbs */}
-        <motion.div
-          className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-[#B600A8]/15 rounded-full blur-[150px] mix-blend-screen"
-          animate={{
-            scale: [1, 1.2, 1],
-            x: [-50, 50, -50],
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        {/* Ambient Orbs (Static for high performance) */}
+        <div
+          className="absolute top-1/4 left-[-100px] w-[500px] h-[500px] bg-[#B600A8]/10 rounded-full blur-[150px] mix-blend-screen transform-gpu"
         />
-        <motion.div
-          className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-[#7621B0]/15 rounded-full blur-[150px] mix-blend-screen"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            x: [50, -50, 50],
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+        <div
+          className="absolute bottom-1/4 right-[-100px] w-[500px] h-[500px] bg-[#7621B0]/10 rounded-full blur-[150px] mix-blend-screen transform-gpu"
         />
       </div>
 

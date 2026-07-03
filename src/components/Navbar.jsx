@@ -34,26 +34,41 @@ const Navbar = ({ theme, onToggleTheme }) => {
 
 
   useEffect(() => {
+    // Lightweight scroll listener for header styling only
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-
-      const sections = navLinks.map(link => link.href.slice(1));
-      const scrollPosition = window.scrollY + 150;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetHeight = element.offsetHeight;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-          }
-        }
-      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Performance-optimized Intersection Observer for active sections
+    const observerOptions = {
+      root: null,
+      rootMargin: '-30% 0px -60% 0px', // detects when section occupies the center viewport area
+      threshold: 0
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    navLinks.forEach(link => {
+      const element = document.getElementById(link.href.slice(1));
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const handleNavClick = (e, href) => {
@@ -91,7 +106,7 @@ const Navbar = ({ theme, onToggleTheme }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Usama JutT
+            M USAMA
             <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-accent-primary to-accent-secondary group-hover:w-full transition-all duration-500 shadow-[0_0_15px_rgba(99,102,241,0.8)] rounded-full" />
           </motion.a>
 

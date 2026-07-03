@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 const CustomCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+
+  // Smooth springs for cursor followers to feel extremely premium
+  const cursorSpringConfig = { damping: 40, stiffness: 400, mass: 0.4 };
+  const ringSpringConfig = { damping: 30, stiffness: 220, mass: 0.6 };
+
+  const ringX = useSpring(mouseX, ringSpringConfig);
+  const ringY = useSpring(mouseY, ringSpringConfig);
+  const dotX = useSpring(mouseX, cursorSpringConfig);
+  const dotY = useSpring(mouseY, cursorSpringConfig);
+
   useEffect(() => {
     const updateMousePosition = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
       if (!isVisible) setIsVisible(true);
     };
 
@@ -29,10 +41,10 @@ const CustomCursor = () => {
     const handleMouseLeave = () => setIsVisible(false);
     const handleMouseEnter = () => setIsVisible(true);
 
-    window.addEventListener('mousemove', updateMousePosition);
-    window.addEventListener('mouseover', handleMouseOver);
-    document.addEventListener('mouseleave', handleMouseLeave);
-    document.addEventListener('mouseenter', handleMouseEnter);
+    window.addEventListener('mousemove', updateMousePosition, { passive: true });
+    window.addEventListener('mouseover', handleMouseOver, { passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    document.addEventListener('mouseenter', handleMouseEnter, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', updateMousePosition);
@@ -47,54 +59,35 @@ const CustomCursor = () => {
     return null;
   }
 
-  const ringVariants = {
-    default: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-      scale: 1,
-      opacity: isVisible ? 1 : 0
-    },
-    hover: {
-      x: mousePosition.x - 24,
-      y: mousePosition.y - 24,
-      scale: 1.5,
-      backgroundColor: 'rgba(236, 72, 153, 0.1)',
-      border: '1px solid rgba(236, 72, 153, 0.8)',
-      opacity: isVisible ? 1 : 0
-    }
-  };
-
-  const dotVariants = {
-    default: {
-      x: mousePosition.x - 4,
-      y: mousePosition.y - 4,
-      scale: 1,
-      opacity: isVisible ? 1 : 0
-    },
-    hover: {
-      x: mousePosition.x - 4,
-      y: mousePosition.y - 4,
-      scale: 0,
-      opacity: 0
-    }
-  };
-
   return (
     <>
       {/* Outer Ring */}
       <motion.div
-        variants={ringVariants}
-        animate={isHovering ? "hover" : "default"}
-        transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#B600A8]/60 shadow-[0_0_15px_rgba(182,0,168,0.4)] pointer-events-none z-[9999] hidden md:block"
+        style={{
+          x: ringX,
+          y: ringY,
+          translateX: '-50%',
+          translateY: '-50%',
+          width: isHovering ? 48 : 32,
+          height: isHovering ? 48 : 32,
+          backgroundColor: isHovering ? 'rgba(236, 72, 153, 0.1)' : 'transparent',
+          borderColor: isHovering ? 'rgba(236, 72, 153, 0.8)' : 'rgba(182, 0, 168, 0.6)',
+          opacity: isVisible ? 1 : 0,
+        }}
+        className="fixed top-0 left-0 rounded-full border shadow-[0_0_15px_rgba(182,0,168,0.4)] pointer-events-none z-[9999] hidden md:block transition-[width,height,background-color,border-color] duration-200"
       />
       
       {/* Inner Dot */}
       <motion.div
-        variants={dotVariants}
-        animate={isHovering ? "hover" : "default"}
-        transition={{ type: "tween", ease: "backOut", duration: 0.05 }}
-        className="fixed top-0 left-0 w-2 h-2 bg-[#ec4899] shadow-[0_0_10px_#ec4899] rounded-full pointer-events-none z-[10000] hidden md:block"
+        style={{
+          x: dotX,
+          y: dotY,
+          translateX: '-50%',
+          translateY: '-50%',
+          scale: isHovering ? 0 : 1,
+          opacity: isVisible ? 1 : 0,
+        }}
+        className="fixed top-0 left-0 w-2 h-2 bg-[#ec4899] shadow-[0_0_10px_#ec4899] rounded-full pointer-events-none z-[10000] hidden md:block transition-transform duration-200"
       />
     </>
   );

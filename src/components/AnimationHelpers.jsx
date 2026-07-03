@@ -16,64 +16,85 @@ export function FI({ children, delay = 0, duration = 0.7, x = 0, y = 30, classNa
   );
 }
 
-// Magnetic Component
-export function Mg({ children, padding = 150, strength = 3 }) {
+// Magnetic Component - Optimized to avoid global window mousemove listener and layout thrashing
+export function Mg({ children, strength = 3 }) {
   const ref = useRef(null);
-  const active = useRef(false);
+  const rectRef = useRef(null);
 
-  useEffect(() => {
+  const handleMouseEnter = () => {
+    if (ref.current) {
+      rectRef.current = ref.current.getBoundingClientRect();
+    }
+  };
+
+  const handleMouseMove = (e) => {
     const el = ref.current;
     if (!el) return;
+    
+    // Fallback if enter event missed caching
+    if (!rectRef.current) {
+      rectRef.current = el.getBoundingClientRect();
+    }
 
-    const handleMouseMove = (e) => {
-      const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
+    const { left, top, width, height } = rectRef.current;
+    const cx = left + width / 2;
+    const cy = top + height / 2;
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
 
-      const isNear =
-        e.clientX >= rect.left - padding &&
-        e.clientX <= rect.right + padding &&
-        e.clientY >= rect.top - padding &&
-        e.clientY <= rect.bottom + padding;
+    el.style.transition = 'transform 0.2s cubic-bezier(0.25, 1, 0.5, 1)';
+    el.style.transform = `translate3d(${dx / strength}px, ${dy / strength}px, 0)`;
+  };
 
-      if (isNear) {
-        el.style.transition = 'transform 0.3s ease-out';
-        el.style.transform = `translate3d(${dx / strength}px, ${dy / strength}px, 0)`;
-        active.current = true;
-      } else if (active.current) {
-        el.style.transition = 'transform 0.6s ease-in-out';
-        el.style.transform = 'translate3d(0,0,0)';
-        active.current = false;
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [padding, strength]);
+  const handleMouseLeave = () => {
+    const el = ref.current;
+    if (!el) return;
+    rectRef.current = null;
+    el.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+    el.style.transform = 'translate3d(0,0,0)';
+  };
 
   return (
-    <div ref={ref} style={{ willChange: 'transform' }}>
+    <div
+      ref={ref}
+      onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ willChange: 'transform' }}
+    >
       {children}
     </div>
   );
 }
 
-// 3D Tilt Card Component
+// 3D Tilt Card Component - Optimized with bounding rect caching
 export function Tilt({ children, className = '' }) {
   const ref = useRef(null);
+  const rectRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (ref.current) {
+      rectRef.current = ref.current.getBoundingClientRect();
+    }
+  };
 
   const handleMouseMove = (e) => {
     const el = ref.current;
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    
+    if (!rectRef.current) {
+      rectRef.current = el.getBoundingClientRect();
+    }
+
+    const { left, top, width, height } = rectRef.current;
+    const x = (e.clientX - left) / width - 0.5;
+    const y = (e.clientY - top) / height - 0.5;
+    
     el.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale3d(1.02, 1.02, 1.02)`;
   };
 
   const handleMouseLeave = () => {
+    rectRef.current = null;
     if (ref.current) {
       ref.current.style.transform = 'perspective(800px) rotateY(0) rotateX(0) scale3d(1, 1, 1)';
     }
@@ -82,6 +103,7 @@ export function Tilt({ children, className = '' }) {
   return (
     <div
       ref={ref}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={`tc ${className}`}

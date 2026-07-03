@@ -310,9 +310,23 @@ export default function Skills() {
   const rotateX = useSpring(useTransform(mouseY, [-20, 20], [8, -8]), { damping: 40, stiffness: 200 });
   const rotateY = useSpring(useTransform(mouseX, [-20, 20], [-8, 8]), { damping: 40, stiffness: 200 });
 
+  const rectRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (containerRef.current) {
+      rectRef.current = containerRef.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e) => {
-    if (!containerRef.current || isMobile) return;
-    const { left, top, width, height } = containerRef.current.getBoundingClientRect();
+    if (isMobile) return;
+    
+    if (!rectRef.current && containerRef.current) {
+      rectRef.current = containerRef.current.getBoundingClientRect();
+    }
+    if (!rectRef.current) return;
+
+    const { left, top, width, height } = rectRef.current;
     const x = e.clientX - left;
     const y = e.clientY - top;
     
@@ -326,6 +340,7 @@ export default function Skills() {
   };
 
   const handleMouseLeave = () => {
+    rectRef.current = null;
     if (isMobile) return;
     mouseX.set(0);
     mouseY.set(0);
@@ -399,7 +414,7 @@ export default function Skills() {
                   <button
                     key={category}
                     onClick={() => setFilter(category)}
-                    className="relative px-8 py-3 sm:px-10 sm:py-3.5 rounded-full font-heading font-black text-xs sm:text-sm uppercase tracking-[0.2em] transition-colors duration-500 z-10"
+                    className="relative px-4 py-2.5 sm:px-10 sm:py-3.5 rounded-full font-heading font-black text-[10px] sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] transition-colors duration-500 z-10"
                     style={{
                       color: filter === category ? '#ffffff' : 'rgba(255, 255, 255, 0.3)',
                     }}
@@ -425,6 +440,7 @@ export default function Skills() {
         {/* 3D Interactive Tech Tree Canvas */}
         <div
           ref={containerRef}
+          onMouseEnter={handleMouseEnter}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           className="relative min-h-[600px] sm:min-h-[700px] h-[80vh] w-full max-w-6xl mx-auto overflow-visible mt-10 perspective-[2000px] group/canvas"

@@ -11,10 +11,6 @@ const Hero = () => {
 
   const heroContent = [
     {
-      heading: 'Cloud Solutions',
-      text: 'I architect secure and robust cloud infrastructure, leveraging modern DevOps practices to ensure your services are highly available, scalable, and future-proof.'
-    },
-    {
       heading: 'Web Applications',
       text: 'I design and develop highly scalable web applications, delivering elegant solutions to complex challenges with a focus on performance and seamless user experiences.'
     },
@@ -266,9 +262,9 @@ const Hero = () => {
               <div className="absolute w-[70%] h-[70%] rounded-full border border-[#B600A8]/20 animate-[spin_10s_linear_infinite] shadow-[0_0_30px_rgba(182,0,168,0.1)]" />
               <div className="absolute w-[50%] h-[50%] rounded-full border border-dashed border-[#7621B0]/40 animate-[spin_15s_linear_infinite_reverse]" />
 
-              {/* Dynamic glowing blobs behind image */}
-              <div className="absolute w-64 h-64 bg-[#B600A8] rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-pulse" />
-              <div className="absolute w-56 h-56 bg-[#ec4899] rounded-full mix-blend-screen filter blur-3xl opacity-30 translate-x-10 translate-y-10 animate-float-slow" />
+              {/* Glowing blobs behind image (Static/GPU promoted) */}
+              <div className="absolute w-64 h-64 bg-[#B600A8] rounded-full mix-blend-screen filter blur-3xl opacity-40 transform-gpu" />
+              <div className="absolute w-56 h-56 bg-[#ec4899] rounded-full mix-blend-screen filter blur-3xl opacity-30 translate-x-10 translate-y-10 transform-gpu" />
             </div>
 
             <div className="relative z-10">

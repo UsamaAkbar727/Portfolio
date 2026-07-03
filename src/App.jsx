@@ -9,7 +9,6 @@ import Journey from './components/Journey';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import CustomCursor from './components/CustomCursor';
 
 const THEME_STORAGE_KEY = 'portfolio-theme';
 
@@ -21,14 +20,8 @@ function App() {
     // Smooth scroll behavior
     document.documentElement.style.scrollBehavior = 'smooth';
 
-    // Disable default cursor on desktop since we have a custom one
-    if (typeof window !== 'undefined' && !window.matchMedia('(pointer: coarse)').matches) {
-      document.body.style.cursor = 'none';
-    }
-
     return () => {
       document.documentElement.style.scrollBehavior = 'auto';
-      document.body.style.cursor = 'auto';
     };
   }, []);
 
@@ -62,7 +55,6 @@ function App() {
 
   return (
     <div className={`min-h-screen bg-bg-primary ${themeClass}`}>
-      <CustomCursor />
       
       {/* Scroll Progress Bar */}
       <motion.div

@@ -108,6 +108,17 @@ body {
     radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
     radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
     var(--bg-primary);
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+@keyframes grid-move {
+  0% {
+    transform: rotateX(60deg) translateY(0) scale(2);
+  }
+  100% {
+    transform: rotateX(60deg) translateY(4rem) scale(2);
+  }
 }
 
 
