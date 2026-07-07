@@ -13,7 +13,7 @@ export const projects = [
     name: 'POS System',
     description: 'Inventory and billing management system with real-time stock tracking and intuitive interface.',
     technologies: ['PHP', 'MySQL', 'JavaScript'],
-    liveLink: '#',
+    liveLink: 'http://satationery.infinityfree.me/',
     image: '/images/pos_system.png',
     featured: false
   },

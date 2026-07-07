@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion, useScroll } from 'framer-motion';
+import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -26,15 +27,34 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Load persisted theme
+    // Initialize Lenis smooth scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    window.lenis = lenis;
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+      window.lenis = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    // Load persisted theme, fallback to dark to prevent light mode overrides on mobile
     const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
     if (stored === 'light' || stored === 'dark') {
       setTheme(stored);
     } else {
-      // Optional: respect system preference when no stored choice
-      const prefersLight =
-        window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-      setTheme(prefersLight ? 'light' : 'dark');
+      setTheme('dark');
     }
   }, []);
 

@@ -65,7 +65,7 @@ export default function Journey() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         {/* Section Header */}
         <FI delay={0} y={30} className="text-center mb-20">
-          <span className="inline-block px-4 py-2 glass-premium rounded-xl text-xs sm:text-sm text-[#D7E2EA] font-semibold mb-4 border border-white/10 uppercase tracking-widest">
+          <span className="inline-block px-4 py-2 rounded-xl text-xs sm:text-sm text-[#D7E2EA] font-semibold mb-4 border border-white/10 bg-white/5 backdrop-blur-md uppercase tracking-widest">
             Timeline Milestone
           </span>
           <h2 className="hh font-black uppercase tracking-tight text-4xl sm:text-5xl lg:text-7xl mb-4 leading-none">
@@ -129,7 +129,7 @@ export default function Journey() {
                   <div className={`w-full md:w-1/2 pl-20 md:pl-0 flex ${isEven ? 'md:justify-end md:pr-16' : 'md:justify-start md:pl-16 md:order-2'}`}>
                     <FI delay={index * 0.15} x={isEven ? -40 : 40} y={0} className="w-full max-w-lg">
                       <motion.div
-                        className="glass-premium rounded-[2rem] p-7 sm:p-9 border border-white/5 bg-[#0a0a0a]/80 backdrop-blur-xl relative overflow-hidden group hover:border-white/20 transition-all duration-500"
+                        className="rounded-[2rem] p-7 sm:p-9 border border-white/5 bg-[#0a0a0a]/80 backdrop-blur-xl relative overflow-hidden group hover:border-white/20 transition-all duration-500"
                         whileHover={{ y: -5, boxShadow: `0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px -5px ${item.color}25` }}
                       >
                         {/* Glowing background accent on hover */}

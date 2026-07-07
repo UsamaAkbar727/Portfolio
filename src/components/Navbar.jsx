@@ -79,10 +79,17 @@ const Navbar = ({ theme, onToggleTheme }) => {
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      if (window.lenis) {
+        window.lenis.scrollTo(offsetPosition, {
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+      } else {
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
     setIsMobileMenuOpen(false);
   };
