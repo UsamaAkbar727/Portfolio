@@ -10,22 +10,12 @@ import Journey from './components/Journey';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import CustomCursor from './components/CustomCursor';
 
 const THEME_STORAGE_KEY = 'portfolio-theme';
 
 function App() {
   const [theme, setTheme] = useState('dark');
   const { scrollYProgress } = useScroll();
-
-  useEffect(() => {
-    // Smooth scroll behavior
-    document.documentElement.style.scrollBehavior = 'smooth';
-
-    return () => {
-      document.documentElement.style.scrollBehavior = 'auto';
-    };
-  }, []);
 
   useEffect(() => {
     // Initialize Lenis smooth scroll
@@ -76,7 +66,6 @@ function App() {
 
   return (
     <div className={`min-h-screen bg-bg-primary ${themeClass}`}>
-      <CustomCursor />
       
       {/* Scroll Progress Bar */}
       <motion.div
