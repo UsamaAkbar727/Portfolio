@@ -10,6 +10,7 @@ import Journey from './components/Journey';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import CustomCursor from './components/CustomCursor';
 
 const THEME_STORAGE_KEY = 'portfolio-theme';
 
@@ -75,6 +76,7 @@ function App() {
 
   return (
     <div className={`min-h-screen bg-bg-primary ${themeClass}`}>
+      <CustomCursor />
       
       {/* Scroll Progress Bar */}
       <motion.div

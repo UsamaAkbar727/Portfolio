@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   FaGithub,
   FaWhatsapp,
+  FaLinkedin,
   FaBars,
   FaTimes,
   FaHome,
@@ -160,9 +161,6 @@ const Navbar = ({ theme, onToggleTheme }) => {
 
           {/* Social Icons - Desktop */}
           <div className="hidden md:flex items-center space-x-2">
-
-            {/* Social Icons - Desktop */}
-
             <motion.a
               href="https://github.com/UsamaAkbar727"
               target="_blank"
@@ -172,6 +170,16 @@ const Navbar = ({ theme, onToggleTheme }) => {
               whileTap={{ scale: 0.9 }}
             >
               <FaGithub size={18} className="group-hover:rotate-12 transition-transform duration-300" />
+            </motion.a>
+            <motion.a
+              href="https://www.linkedin.com/in/usama-akbar-a070323a5"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 bg-white/5 border border-transparent rounded-full flex items-center justify-center text-text-secondary hover:text-white hover:bg-white/10 hover:border-blue-400/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all duration-300 group"
+              whileHover={{ scale: 1.15, y: -2 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <FaLinkedin size={18} className="group-hover:text-blue-500 transition-colors duration-300" />
             </motion.a>
             <motion.a
               href="https://wa.me/923098643058"
@@ -246,6 +254,14 @@ const Navbar = ({ theme, onToggleTheme }) => {
                     className="w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300 hover:scale-110"
                   >
                     <FaGithub size={18} />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/usama-akbar-a070323a5"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 glass rounded-lg flex items-center justify-center text-text-secondary hover:text-white hover:border-accent-primary/50 transition-all duration-300 hover:scale-110"
+                  >
+                    <FaLinkedin size={18} />
                   </a>
                   <a
                     href="https://wa.me/923098643058"

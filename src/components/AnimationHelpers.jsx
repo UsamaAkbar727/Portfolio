@@ -192,12 +192,12 @@ export function AC({ value, suffix = '', duration = 2 }) {
   );
 }
 
-// Figma Asset links
+// Localized Asset paths
 export const AD = {
-  moon: 'https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png',
-  p59: 'https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png',
-  lego: 'https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png',
-  grp: 'https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png',
+  moon: '/images/moon_icon.png',
+  p59: '/images/p59_1.png',
+  lego: '/images/lego_icon.png',
+  grp: '/images/group_134.png',
 };
 
 // Keyword highlight system

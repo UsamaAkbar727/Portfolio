@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { FaArrowRight, FaCode, FaRocket, FaReact, FaNodeJs, FaDatabase } from 'react-icons/fa';
+import { FaArrowRight, FaCode, FaRocket, FaReact, FaNodeJs, FaDatabase, FaDownload } from 'react-icons/fa';
 import { FI, Tilt, highlightText, Mg } from './AnimationHelpers';
 
 const Hero = () => {
@@ -234,6 +234,18 @@ const Hero = () => {
                   <div className="absolute inset-0 w-1/2 h-full bg-white/20 transform -skew-x-12 -translate-x-[150%] group-hover:translate-x-[250%] transition-transform duration-1000 pointer-events-none" />
                   <span className="relative z-10">View Projects</span>
                   <FaArrowRight className="transform transition-transform group-hover:translate-x-1 relative z-10" size={12} />
+                </motion.a>
+              </Mg>
+              <Mg padding={50} strength={2}>
+                <motion.a
+                  href="/assets/resume.pdf"
+                  download="Usama_Akbar_Resume.pdf"
+                  className="group px-8 py-4 bg-white/5 hover:bg-[#ec4899]/10 rounded-2xl font-kanit font-black uppercase tracking-widest text-[#D7E2EA]/90 border border-[#ec4899]/30 hover:border-[#ec4899]/80 transition-all duration-300 backdrop-blur-2xl flex items-center justify-center gap-2 shadow-xl hover:shadow-[0_0_20px_rgba(236,72,153,0.2)] w-full"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <span className="relative z-10">Download CV</span>
+                  <FaDownload className="relative z-10 text-[#ec4899]" size={11} />
                 </motion.a>
               </Mg>
               <Mg padding={50} strength={2}>

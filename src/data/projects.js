@@ -31,7 +31,7 @@ export const projects = [
     name: "JATT's CollectioNs",
     description: 'A modern e-commerce storefront featuring product collections, interactive search, item categorization, and dynamic cart/wishlist management.',
     technologies: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
-    liveLink: 'https://preview-chat-2fe04bc2-ea8a-4920-9348-61110bfa7555.space-z.ai/#',
+    liveLink: '#',
     image: '/images/shopping_store.png',
     featured: false
   }
