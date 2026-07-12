@@ -28,10 +28,10 @@ export const projects = [
   },
   {
     id: 4,
-    name: "JATT's CollectioNs",
-    description: 'A modern e-commerce storefront featuring product collections, interactive search, item categorization, and dynamic cart/wishlist management.',
-    technologies: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
-    liveLink: '#',
+    name: 'FashionStore',
+    description: 'A premium luxury e-commerce platform for fashion with secure authentication, dynamic product displays, and a dedicated admin panel. (Login as Owner: Sultanjutt@gmail.com / admin123)',
+    technologies: ['PHP', 'MySQL', 'Tailwind CSS', 'JavaScript'],
+    liveLink: 'http://shoppingstore.great-site.net',
     image: '/images/shopping_store.png',
     featured: false
   }
