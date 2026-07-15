@@ -13,14 +13,15 @@ export default {
         'bg-primary': 'var(--bg-primary)',
         'bg-secondary': 'var(--bg-secondary)',
         'bg-tertiary': 'var(--bg-tertiary)',
-        'accent-primary': '#6366f1',
-        'accent-secondary': '#8b5cf6',
-        'accent-tertiary': '#ec4899',
+        'accent-primary': '#2563eb', // Royal Blue
+        'accent-secondary': '#4f46e5', // Indigo
+        'accent-tertiary': '#06b6d4', // Cyan
+        'accent-gold': '#d97706', // Gold
         'text-primary': 'var(--text-primary)',
         'text-secondary': 'var(--text-secondary)',
       },
       fontFamily: {
-        heading: ['Poppins', 'sans-serif'],
+        heading: ['"Space Grotesk"', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
       },
       animation: {
@@ -36,8 +37,8 @@ export default {
           '50%': { transform: 'translateY(-20px)' },
         },
         'glow-pulse': {
-          '0%, 100%': { boxShadow: '0 0 30px rgba(99, 102, 241, 0.3)' },
-          '50%': { boxShadow: '0 0 60px rgba(139, 92, 246, 0.5)' },
+          '0%, 100%': { boxShadow: '0 0 30px rgba(37, 99, 235, 0.15)' },
+          '50%': { boxShadow: '0 0 60px rgba(79, 70, 229, 0.25)' },
         },
         'shimmer': {
           '0%, 100%': { transform: 'translateX(-100%)' },
@@ -68,18 +69,18 @@ export default {
           'border': '1px solid var(--glass-border)',
         },
         '.glass-dark': {
-          'background': 'var(--glass-bg-dark)',
+          'background': 'var(--glass-bg)',
           'backdrop-filter': 'blur(24px)',
           '-webkit-backdrop-filter': 'blur(24px)',
-          'border': '1px solid var(--glass-border-dark)',
+          'border': '1px solid var(--glass-border)',
         },
         '.shimmer': {
-          'background': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+          'background': 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
           'background-size': '200% 100%',
           'animation': 'shimmer 2s infinite',
         },
         '.gradient-text': {
-          'background': 'linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899)',
+          'background': 'linear-gradient(135deg, #2563eb, #4f46e5, #06b6d4)',
           'background-clip': 'text',
           '-webkit-background-clip': 'text',
           '-webkit-text-fill-color': 'transparent',

@@ -35,46 +35,43 @@ html.lenis, html.lenis body {
 
 
 :root {
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #12121a;
-  --bg-tertiary: #1a1a25;
+  --bg-primary: #ffffff; /* White background */
+  --bg-secondary: #f8fafc; /* Slate 50 */
+  --bg-tertiary: #f1f5f9; /* Slate 100 */
 
-  --text-primary: #ffffff;
-  --text-secondary: #94a3b8;
+  --text-primary: #0f172a; /* Slate 900 */
+  --text-secondary: #475569; /* Slate 600 */
 
-  /* Glass backgrounds used by Tailwind plugin utilities */
-  --glass-bg: rgba(18, 18, 26, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-bg-dark: rgba(10, 10, 15, 0.6);
-  --glass-border-dark: rgba(255, 255, 255, 0.05);
+  /* Glass backgrounds suitable for premium light mode */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(15, 23, 42, 0.06);
+  --glass-bg-dark: rgba(248, 250, 252, 0.85);
+  --glass-border-dark: rgba(15, 23, 42, 0.08);
 
-  /* Used to keep icons/text readable in light mode */
-  --icon-primary: #ffffff;
-
-  --scrollbar-track: #0a0a0f;
+  --icon-primary: #0f172a;
+  --scrollbar-track: #f8fafc;
 }
 
 html[data-theme='light'] {
-  --bg-primary: #f8fafc;
-  --bg-secondary: #eef2ff;
-  --bg-tertiary: #ffffff;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
 
   --text-primary: #0f172a;
   --text-secondary: #475569;
 
-  --glass-bg: rgba(255, 255, 255, 0.72);
-  --glass-border: rgba(15, 23, 42, 0.12);
-  --glass-bg-dark: rgba(255, 255, 255, 0.82);
-  --glass-border-dark: rgba(15, 23, 42, 0.10);
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(15, 23, 42, 0.06);
+  --glass-bg-dark: rgba(248, 250, 252, 0.85);
+  --glass-border-dark: rgba(15, 23, 42, 0.08);
 
   --icon-primary: #0f172a;
-
   --scrollbar-track: #f8fafc;
 }
 
 /* Ensure any input/button placeholders remain readable in light mode */
-html[data-theme='light'] ::placeholder {
-  color: #64748b !important;
+::placeholder {
+  color: #94a3b8 !important;
   opacity: 1;
 }
 
@@ -92,28 +89,25 @@ body {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
   background: var(--scrollbar-track);
 }
 
-
-
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #6366f1, #8b5cf6);
+  background: linear-gradient(180deg, #2563eb, #4f46e5);
   border-radius: 8px;
 }
 
-
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #8b5cf6, #ec4899);
+  background: linear-gradient(180deg, #4f46e5, #06b6d4);
 }
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #06b6d4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -122,9 +116,9 @@ body {
 /* Animated background */
 .animated-bg {
   background:
-    radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 15% 15%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(79, 70, 229, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 50%),
     var(--bg-primary);
   will-change: transform;
   transform: translateZ(0);
@@ -142,18 +136,18 @@ body {
 
 /* Glow effects */
 .glow-primary {
-  box-shadow: 0 0 30px rgba(99, 102, 241, 0.3),
-    0 0 60px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.12),
+    0 20px 40px -15px rgba(37, 99, 235, 0.08);
 }
 
 .glow-secondary {
-  box-shadow: 0 0 30px rgba(139, 92, 246, 0.3),
-    0 0 60px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.12),
+    0 20px 40px -15px rgba(79, 70, 229, 0.08);
 }
 
 .glow-accent {
-  box-shadow: 0 0 30px rgba(236, 72, 153, 0.3),
-    0 0 60px rgba(236, 72, 153, 0.15);
+  box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.12),
+    0 20px 40px -15px rgba(6, 182, 212, 0.08);
 }
 
 /* Particle animation */
@@ -184,7 +178,7 @@ body {
 
 .hover-scale:hover {
   transform: scale(1.05) translateY(-6px);
-  box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15);
 }
 
 /* Fade in up animation */

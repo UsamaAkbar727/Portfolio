@@ -5,8 +5,8 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-12 relative border-t border-gray-200 dark:border-white/10 bg-white/80 dark:bg-slate-950/90 backdrop-blur-sm">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary/50 to-transparent" />
+    <footer className="py-12 relative border-t border-slate-100 bg-[#f8fafc] backdrop-blur-sm">
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary/30 to-transparent" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -22,25 +22,25 @@ const Footer = () => {
               href="https://github.com/UsamaAkbar727"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-white hover:bg-accent-primary hover:border-accent-primary transition-all duration-300 shadow-md"
+              className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:text-white hover:bg-slate-900 hover:border-slate-900 transition-all duration-300 shadow-sm"
             >
-              <FaGithub size={18} />
+              <FaGithub size={16} />
             </a>
             <a
               href="https://www.linkedin.com/in/usama-akbar-a070323a5"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-white hover:bg-[#0077b5] hover:border-[#0077b5] transition-all duration-300 shadow-md"
+              className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:text-white hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 shadow-sm"
             >
-              <FaLinkedin size={18} />
+              <FaLinkedin size={16} />
             </a>
             <a
               href="https://wa.me/923098643058"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-white hover:bg-[#25D366] hover:border-[#25D366] transition-all duration-300 shadow-md"
+              className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:text-white hover:bg-green-500 hover:border-green-500 transition-all duration-300 shadow-sm"
             >
-              <FaWhatsapp size={18} />
+              <FaWhatsapp size={16} />
             </a>
           </div>
 
@@ -49,9 +49,9 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="text-sm text-gray-600 dark:text-gray-300 flex items-center justify-center gap-2"
+            className="text-sm text-slate-500 flex items-center justify-center gap-2"
           >
-            Developed{" "}
+            Developed{"  "}
             <motion.span
               className="text-accent-primary"
               animate={{
@@ -65,7 +65,7 @@ const Footer = () => {
             >
               ❤
             </motion.span>
-            {" "}by Usama Akbar
+            {"  "}by Usama Akbar
           </motion.p>
         </motion.div>
       </div>
