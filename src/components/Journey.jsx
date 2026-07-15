@@ -66,7 +66,7 @@ export default function Journey() {
         {/* Section Header */}
         <FI delay={0} y={30} className="text-center mb-20">
           <span className="inline-block px-4 py-2 rounded-xl text-xs sm:text-sm text-[#D7E2EA] font-semibold mb-4 border border-white/10 bg-white/5 backdrop-blur-md uppercase tracking-widest">
-            Timeline Milestone
+            Education & Experience
           </span>
           <h2 className="hh font-black uppercase tracking-tight text-4xl sm:text-5xl lg:text-7xl mb-4 leading-none">
             My <span className="gradient-text">Journey</span>

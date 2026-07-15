@@ -16,101 +16,28 @@ export function FI({ children, delay = 0, duration = 0.7, x = 0, y = 30, classNa
   );
 }
 
-// Magnetic Component - Optimized to avoid global window mousemove listener and layout thrashing
-export function Mg({ children, strength = 3 }) {
-  const ref = useRef(null);
-  const rectRef = useRef(null);
-
-  const handleMouseEnter = () => {
-    if (ref.current) {
-      rectRef.current = ref.current.getBoundingClientRect();
-    }
-  };
-
-  const handleMouseMove = (e) => {
-    const el = ref.current;
-    if (!el) return;
-    
-    // Fallback if enter event missed caching
-    if (!rectRef.current) {
-      rectRef.current = el.getBoundingClientRect();
-    }
-
-    const { left, top, width, height } = rectRef.current;
-    const cx = left + width / 2;
-    const cy = top + height / 2;
-    const dx = e.clientX - cx;
-    const dy = e.clientY - cy;
-
-    el.style.transition = 'transform 0.2s cubic-bezier(0.25, 1, 0.5, 1)';
-    el.style.transform = `translate3d(${dx / strength}px, ${dy / strength}px, 0)`;
-  };
-
-  const handleMouseLeave = () => {
-    const el = ref.current;
-    if (!el) return;
-    rectRef.current = null;
-    el.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-    el.style.transform = 'translate3d(0,0,0)';
-  };
-
+// Magnetic Component - Optimized to use smooth CSS scale instead of high-frequency mousemove listeners
+export function Mg({ children }) {
   return (
-    <div
-      ref={ref}
-      onMouseEnter={handleMouseEnter}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ willChange: 'transform' }}
+    <motion.div
+      whileHover={{ scale: 1.03, y: -2 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
 
-// 3D Tilt Card Component - Optimized with bounding rect caching
+// 3D Tilt Card Component - Replaced JS layout calculation with lightweight GPU-accelerated Framer Motion scales
 export function Tilt({ children, className = '' }) {
-  const ref = useRef(null);
-  const rectRef = useRef(null);
-
-  const handleMouseEnter = () => {
-    if (ref.current) {
-      rectRef.current = ref.current.getBoundingClientRect();
-    }
-  };
-
-  const handleMouseMove = (e) => {
-    const el = ref.current;
-    if (!el) return;
-    
-    if (!rectRef.current) {
-      rectRef.current = el.getBoundingClientRect();
-    }
-
-    const { left, top, width, height } = rectRef.current;
-    const x = (e.clientX - left) / width - 0.5;
-    const y = (e.clientY - top) / height - 0.5;
-    
-    el.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale3d(1.02, 1.02, 1.02)`;
-  };
-
-  const handleMouseLeave = () => {
-    rectRef.current = null;
-    if (ref.current) {
-      ref.current.style.transform = 'perspective(800px) rotateY(0) rotateX(0) scale3d(1, 1, 1)';
-    }
-  };
-
   return (
-    <div
-      ref={ref}
-      onMouseEnter={handleMouseEnter}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={`tc ${className}`}
-      style={{ transition: 'transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)', willChange: 'transform' }}
+    <motion.div
+      whileHover={{ scale: 1.02, y: -4 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className={className}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
 
@@ -200,7 +127,7 @@ export const AD = {
   grp: '/images/group_134.png',
 };
 
-// Keyword highlight system
+// Keyword highlight system - Toned down to avoid shifting layout or laggy glow animations
 export const highlightText = (text, theme = 'system') => {
   if (!text) return text;
   const keywords = [
@@ -213,13 +140,13 @@ export const highlightText = (text, theme = 'system') => {
   const pattern = new RegExp(`\\b(${keywords.join('|')})\\b`, 'gi');
   const parts = text.split(pattern);
   
-  let gradientClass = 'from-[#B600A8] via-[#ec4899] to-[#7621B0]';
+  let colorClass = 'text-accent-tertiary'; // Standard static color
   if (theme === 'frontend') {
-    gradientClass = 'from-cyan-400 via-sky-400 to-[#B600A8]';
+    colorClass = 'text-accent-primary';
   } else if (theme === 'backend') {
-    gradientClass = 'from-[#7621B0] via-purple-500 to-emerald-400';
+    colorClass = 'text-accent-secondary';
   } else if (theme === 'fullstack') {
-    gradientClass = 'from-[#ec4899] via-rose-400 to-amber-400';
+    colorClass = 'text-accent-tertiary';
   }
   
   return parts.map((part, i) => {
@@ -228,7 +155,7 @@ export const highlightText = (text, theme = 'system') => {
       return (
         <span 
           key={i} 
-          className={`inline-block font-bold bg-gradient-to-r ${gradientClass} bg-clip-text text-transparent highlight-shine hover:scale-110 hover:brightness-125 transition-transform duration-300 cursor-help`}
+          className={`font-semibold ${colorClass}`}
         >
           {part}
         </span>
