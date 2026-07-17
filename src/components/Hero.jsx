@@ -8,7 +8,7 @@ const Hero = () => {
   const [loopNum, setLoopNum] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [delta, setDelta] = useState(150);
-  const [activeTab, setActiveTab] = useState('Developer.json');
+
 
   const heroContent = [
     {
@@ -81,44 +81,7 @@ const Hero = () => {
     }
   };
 
-  const codeSnippets = {
-    'Developer.json': `{
-  "name": "Usama Akbar",
-  "role": "Full Stack Developer",
-  "experience": "1+ Years",
-  "delivered": "20+ Projects",
-  "core_stack": {
-    "frontend": ["React", "TailwindCSS"],
-    "backend": ["PHP/Laravel", "Node.js"],
-    "database": ["MySQL", "MongoDB"]
-  },
-  "location": "Pakistan",
-  "open_to_work": true
-}`,
-    'App.jsx': `import React from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
 
-export default function Portfolio() {
-  return (
-    <div className="portfolio">
-      <Navbar />
-      <Hero />
-      {/* Handcrafted Visuals */}
-    </div>
-  );
-}`,
-    'index.css': `:root {
-  --accent-primary: #2563eb;
-  --accent-secondary: #4f46e5;
-  --bg-grid: linear-gradient(
-    to bottom,
-    rgba(15,23,42,0.015) 1px,
-    transparent 1px
-  );
-  font-family: 'Space Grotesk';
-}`
-  };
 
   return (
     <section
@@ -226,103 +189,71 @@ export default function Portfolio() {
 
           {/* RIGHT COLUMN: Interactive Code Mockup Window */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:col-span-5 flex justify-center lg:justify-end w-full relative mt-16 lg:mt-0 z-10"
           >
-            {/* Ambient Background Glow */}
+            {/* Soft Ambient Background Glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] pointer-events-none z-0 flex items-center justify-center">
-              <div className="absolute w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-[0.03]" />
-              <div className="absolute w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-[0.03] translate-x-8" />
+              <div className="absolute w-72 h-72 bg-accent-primary rounded-full mix-blend-multiply filter blur-3xl opacity-[0.08]" />
+              <div className="absolute w-56 h-56 bg-accent-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-[0.08] translate-x-8 translate-y-8" />
             </div>
 
-            {/* Floating stats badges */}
-            <div className="absolute -top-6 -left-4 sm:-left-8 bg-bg-primary/95 border border-glass-border rounded-2xl p-4 shadow-premium flex items-center gap-4 z-30 select-none">
-              <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-accent-primary text-lg">
-                <FaCode />
+            <div className="relative z-10">
+              {/* Floating Experience Widget */}
+              <div className="absolute -top-6 -left-6 sm:-left-12 bg-bg-primary/95 border border-glass-border rounded-2xl p-4 shadow-premium flex items-center gap-4 z-30 select-none">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-accent-primary text-lg">
+                  <FaCode />
+                </div>
+                <div>
+                  <div className="text-text-primary font-heading font-bold text-sm leading-tight">1+ YEARS</div>
+                  <div className="text-text-secondary text-[9px] font-mono tracking-wider uppercase mt-0.5">Experience</div>
+                </div>
               </div>
-              <div>
-                <div className="text-text-primary font-heading font-bold text-sm leading-tight">1+ YEARS</div>
-                <div className="text-text-secondary text-[9px] font-mono tracking-wider uppercase mt-0.5">Experience</div>
+
+              {/* Floating Projects Widget */}
+              <div className="absolute -bottom-8 -right-4 sm:-right-8 bg-bg-primary/95 border border-glass-border rounded-2xl p-4 shadow-premium flex items-center gap-4 z-30 select-none">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-accent-secondary text-lg">
+                  <FaRocket />
+                </div>
+                <div>
+                  <div className="text-text-primary font-heading font-bold text-sm leading-tight">20+ PROJECTS</div>
+                  <div className="text-text-secondary text-[9px] font-mono tracking-wider uppercase mt-0.5">Delivered</div>
+                </div>
+              </div>
+
+              {/* Profile Card Wrapper */}
+              <div className="relative z-20">
+                <Tilt className="relative w-72 h-[22rem] sm:w-80 sm:h-[26rem] md:w-[350px] md:h-[420px] rounded-[2rem] p-[1px] bg-glass-border hover:bg-glass-border-dark shadow-premium overflow-hidden cursor-pointer">
+                  <div className="w-full h-full rounded-[1.95rem] overflow-hidden bg-bg-primary relative flex items-center justify-center">
+
+                    {/* Profile Photo */}
+                    <div className="absolute inset-0 z-10">
+                      <img
+                        id="profile-photo"
+                        src="/images/profile.png.jpg"
+                        alt="Usama Akbar - Full Stack Developer"
+                        className="w-full h-full object-cover object-center filter contrast-105 brightness-95"
+                        onError={(e) => {
+                          e.target.src = '/images/profile.png.jpg';
+                        }}
+                      />
+                      {/* Color overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/80 via-transparent to-transparent group-hover:opacity-40 transition-opacity duration-300" />
+                    </div>
+
+                    {/* Glass overlay at the bottom with name */}
+                    <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-bg-primary via-bg-primary/80 to-transparent z-20 flex items-end justify-center p-6 pointer-events-none">
+                      <div className="text-center">
+                        <p className="text-text-primary font-heading font-black text-2xl tracking-widest uppercase">USAMA</p>
+                        <p className="text-accent-primary font-mono text-xs tracking-wider uppercase mt-1">Full Stack Developer</p>
+                      </div>
+                    </div>
+                  </div>
+                </Tilt>
               </div>
             </div>
-
-            <div className="absolute -bottom-6 right-2 bg-bg-primary/95 border border-glass-border rounded-2xl p-4 shadow-premium flex items-center gap-4 z-30 select-none">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-accent-secondary text-lg">
-                <FaRocket />
-              </div>
-              <div>
-                <div className="text-text-primary font-heading font-bold text-sm leading-tight">20+ PROJECTS</div>
-                <div className="text-text-secondary text-[9px] font-mono tracking-wider uppercase mt-0.5">Delivered</div>
-              </div>
-            </div>
-
-            {/* Mock Editor Window */}
-            <Tilt className="relative w-full max-w-[440px] rounded-3xl bg-bg-primary border border-glass-border shadow-premium overflow-hidden cursor-pointer select-none">
-              {/* Window Header */}
-              <div className="bg-bg-secondary border-b border-glass-border px-6 py-4 flex items-center justify-between">
-                <div className="flex gap-2">
-                  <span className="w-3.5 h-3.5 rounded-full bg-red-400/80" />
-                  <span className="w-3.5 h-3.5 rounded-full bg-yellow-400/80" />
-                  <span className="w-3.5 h-3.5 rounded-full bg-green-400/80" />
-                </div>
-                <div className="flex gap-1">
-                  <FaTerminal className="text-text-secondary mr-2 mt-0.5" size={12} />
-                  <span className="font-mono text-xs font-semibold text-text-secondary uppercase tracking-widest">
-                    Vim - Developer Details
-                  </span>
-                </div>
-                <div className="w-12" /> {/* spacing element */}
-              </div>
-
-              {/* Tab Bar */}
-              <div className="flex bg-bg-secondary/50 border-b border-glass-border">
-                {['Developer.json', 'App.jsx', 'index.css'].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActiveTab(tab);
-                    }}
-                    className={`px-5 py-2.5 font-mono text-xs border-r border-glass-border flex items-center gap-2 transition-all duration-300 ${
-                      activeTab === tab
-                        ? 'bg-bg-primary border-t-2 border-t-accent-primary text-text-primary font-bold'
-                        : 'text-text-secondary hover:text-text-primary hover:bg-bg-secondary/50'
-                    }`}
-                  >
-                    <FaLaptopCode size={11} className={activeTab === tab ? 'text-accent-primary' : 'text-text-secondary'} />
-                    {tab}
-                  </button>
-                ))}
-              </div>
-
-              {/* Editor Workspace */}
-              <div className="p-6 font-mono text-xs leading-relaxed text-text-primary min-h-[300px] flex items-stretch">
-                {/* Line numbers column */}
-                <div className="pr-4 border-r border-glass-border text-text-secondary/40 text-right select-none space-y-1.5 flex flex-col justify-start">
-                  {codeSnippets[activeTab].split('\n').map((_, idx) => (
-                    <span key={idx} className="block">{idx + 1}</span>
-                  ))}
-                </div>
-
-                {/* Code viewport */}
-                <div className="pl-6 flex-grow overflow-x-auto whitespace-pre space-y-1.5 text-left">
-                  <AnimatePresence mode="wait">
-                    <motion.code
-                      key={activeTab}
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -5 }}
-                      transition={{ duration: 0.2 }}
-                      className="block text-text-primary font-medium"
-                    >
-                      {codeSnippets[activeTab]}
-                    </motion.code>
-                  </AnimatePresence>
-                </div>
-              </div>
-            </Tilt>
           </motion.div>
 
         </div>
