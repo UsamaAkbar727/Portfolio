@@ -13,12 +13,14 @@ export default {
         'bg-primary': 'var(--bg-primary)',
         'bg-secondary': 'var(--bg-secondary)',
         'bg-tertiary': 'var(--bg-tertiary)',
-        'accent-primary': '#2563eb', // Royal Blue
-        'accent-secondary': '#4f46e5', // Indigo
-        'accent-tertiary': '#06b6d4', // Cyan
-        'accent-gold': '#d97706', // Gold
+        'accent-primary': 'var(--accent-primary)',
+        'accent-secondary': 'var(--accent-secondary)',
+        'accent-tertiary': 'var(--accent-tertiary)',
+        'accent-gold': 'var(--accent-gold)',
         'text-primary': 'var(--text-primary)',
         'text-secondary': 'var(--text-secondary)',
+        'glass-border': 'var(--glass-border)',
+        'glass-bg': 'var(--glass-bg)',
       },
       fontFamily: {
         heading: ['"Space Grotesk"', 'sans-serif'],
@@ -80,7 +82,7 @@ export default {
           'animation': 'shimmer 2s infinite',
         },
         '.gradient-text': {
-          'background': 'linear-gradient(135deg, #2563eb, #4f46e5, #06b6d4)',
+          'background': 'linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary))',
           'background-clip': 'text',
           '-webkit-background-clip': 'text',
           '-webkit-text-fill-color': 'transparent',

@@ -70,11 +70,12 @@ const CustomCursor = () => {
           translateY: '-50%',
           width: isHovering ? 48 : 32,
           height: isHovering ? 48 : 32,
-          backgroundColor: isHovering ? 'rgba(236, 72, 153, 0.1)' : 'transparent',
-          borderColor: isHovering ? 'rgba(236, 72, 153, 0.8)' : 'rgba(182, 0, 168, 0.6)',
+          backgroundColor: isHovering ? 'var(--accent-primary-hover-bg)' : 'transparent',
+          borderColor: isHovering ? 'var(--accent-primary)' : 'var(--accent-primary-muted)',
           opacity: isVisible ? 1 : 0,
+          boxShadow: isHovering ? '0 0 15px var(--accent-primary)' : 'none',
         }}
-        className="fixed top-0 left-0 rounded-full border shadow-[0_0_15px_rgba(182,0,168,0.4)] pointer-events-none z-[9999] hidden md:block transition-[width,height,background-color,border-color] duration-200"
+        className="fixed top-0 left-0 rounded-full border pointer-events-none z-[9999] hidden md:block transition-[width,height,background-color,border-color,box-shadow] duration-200"
       />
       
       {/* Inner Dot */}
@@ -86,8 +87,10 @@ const CustomCursor = () => {
           translateY: '-50%',
           scale: isHovering ? 0 : 1,
           opacity: isVisible ? 1 : 0,
+          backgroundColor: 'var(--accent-primary)',
+          boxShadow: '0 0 10px var(--accent-primary)',
         }}
-        className="fixed top-0 left-0 w-2 h-2 bg-[#ec4899] shadow-[0_0_10px_#ec4899] rounded-full pointer-events-none z-[10000] hidden md:block transition-transform duration-200"
+        className="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none z-[10000] hidden md:block transition-transform duration-200"
       />
     </>
   );
