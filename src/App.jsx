@@ -16,13 +16,15 @@ export const ThemeContext = createContext();
 
 function App() {
   const { scrollYProgress } = useScroll();
-  const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem('theme');
-    if (saved) return saved;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  });
+  const theme = 'dark';
+  const setTheme = () => {};
 
   useEffect(() => {
+    // Force dark mode on document element
+    document.documentElement.dataset.theme = 'dark';
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+
     // Initialize Lenis smooth scroll
     const lenis = new Lenis({
       duration: 1.2,
@@ -43,16 +45,6 @@ function App() {
       window.lenis = null;
     };
   }, []);
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

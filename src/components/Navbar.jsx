@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FaGithub,
@@ -11,12 +11,9 @@ import {
   FaCode,
   FaProjectDiagram,
   FaEnvelope,
-  FaSun,
-  FaMoon,
   FaServer,
   FaBriefcase,
 } from 'react-icons/fa';
-import { ThemeContext } from '../App';
 
 const navLinks = [
   { name: 'Home', href: '#home', icon: FaHome },
@@ -33,11 +30,6 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useContext(ThemeContext);
-
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
 
   useEffect(() => {
     // Lightweight scroll listener for header styling only
@@ -195,41 +187,12 @@ const Navbar = () => {
               <FaWhatsapp size={16} className="group-hover:text-green-600 transition-colors duration-300" />
             </motion.a>
             
-            {/* Theme Toggle Button */}
-            <motion.button
-              onClick={toggleTheme}
-              className="w-9 h-9 bg-bg-secondary border border-glass-border rounded-full flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-bg-tertiary hover:shadow-sm transition-all duration-300"
-              whileHover={{ scale: 1.1, y: -1 }}
-              whileTap={{ scale: 0.95 }}
-              title="Toggle Theme"
-              type="button"
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={theme}
-                  initial={{ y: -10, opacity: 0, rotate: -45 }}
-                  animate={{ y: 0, opacity: 1, rotate: 0 }}
-                  exit={{ y: 10, opacity: 0, rotate: 45 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex items-center justify-center"
-                >
-                  {theme === 'light' ? <FaMoon size={14} /> : <FaSun size={14} />}
-                </motion.div>
-              </AnimatePresence>
-            </motion.button>
+
           </div>
 
           {/* Mobile Actions (Menu + Theme Toggle) */}
           <div className="flex md:hidden items-center gap-2">
-            <motion.button
-              onClick={toggleTheme}
-              className="w-9 h-9 bg-bg-secondary border border-glass-border rounded-full flex items-center justify-center text-text-primary"
-              whileTap={{ scale: 0.9 }}
-              title="Toggle Theme"
-              type="button"
-            >
-              {theme === 'light' ? <FaMoon size={14} /> : <FaSun size={14} />}
-            </motion.button>
+
 
             <motion.button
               className="w-9 h-9 bg-bg-secondary border border-glass-border rounded-full flex items-center justify-center text-text-primary"
