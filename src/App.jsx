@@ -5,9 +5,12 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
+import Workflow from './components/Workflow';
 import Skills from './components/Skills';
+import BehindTheCode from './components/BehindTheCode';
 import Journey from './components/Journey';
 import Projects from './components/Projects';
+import FAQ from './components/FAQ';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
@@ -70,9 +73,12 @@ function App() {
           <Hero />
           <About />
           <Services />
+          <Workflow />
           <Skills />
+          <BehindTheCode />
           <Journey />
           <Projects />
+          <FAQ />
           <Contact />
         </main>
 
