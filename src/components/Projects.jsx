@@ -114,11 +114,11 @@ function ProjectCard({ project, onViewDetails }) {
               </div>
 
               {/* Viewport Image */}
-              <div className="aspect-[4/3] w-full overflow-hidden relative z-10 bg-bg-secondary">
+              <div className="aspect-[4/3] w-full overflow-hidden relative z-10 bg-bg-secondary flex items-center justify-center">
                 <motion.img
                   src={project.image}
                   alt={project.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover/browser:scale-[1.025]"
+                  className="w-full h-full object-contain transition-transform duration-700 group-hover/browser:scale-[1.025]"
                   loading="lazy"
                 />
               </div>
