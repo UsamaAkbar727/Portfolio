@@ -10,7 +10,7 @@ export default function WhatsAppFloating() {
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 1.5, type: 'spring', stiffness: 260, damping: 20 }}
-      className="fixed bottom-6 left-6 z-[9999]"
+      className="fixed top-1/2 -translate-y-1/2 left-6 z-[9999]"
     >
       <motion.a
         href={whatsappUrl}

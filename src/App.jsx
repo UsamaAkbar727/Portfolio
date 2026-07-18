@@ -14,6 +14,7 @@ import FAQ from './components/FAQ';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
+import WhatsAppFloating from './components/WhatsAppFloating';
 
 export const ThemeContext = createContext();
 
@@ -55,6 +56,9 @@ function App() {
         
         {/* Custom Cursor */}
         <CustomCursor />
+
+        {/* Floating WhatsApp Button */}
+        <WhatsAppFloating />
 
         {/* Scroll Progress Bar */}
         <motion.div
