@@ -34,5 +34,14 @@ export const projects = [
     liveLink: 'http://shoppingstore.great-site.net',
     image: '/images/shopping_store.png',
     featured: false
+  },
+  {
+    id: 5,
+    name: 'ImperialEstates',
+    description: 'A premium luxury real estate platform designed for searching and listing high-end properties in Lahore, featuring dynamic filter listings, luxury asset showcase cards, and a refined responsive UI.',
+    technologies: ['React JS', 'Tailwind CSS', 'Framer Motion', 'React Icons'],
+    liveLink: 'https://real-estate-pi-henna.vercel.app/',
+    image: '/images/imperial_estates.png',
+    featured: true
   }
 ];

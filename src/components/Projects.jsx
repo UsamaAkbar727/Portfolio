@@ -44,17 +44,17 @@ function ProjectCard({ project, onViewDetails, category, activeColor }) {
             </div>
 
             {/* Viewport Image */}
-            <div className="w-full h-full pt-7 overflow-hidden relative bg-bg-secondary">
+            <div className="w-full h-full pt-7 overflow-hidden relative bg-bg-secondary flex items-center justify-center">
               <img
                 src={project.image}
                 alt={project.name}
-                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover/card:scale-105"
+                className="w-full h-full object-contain transition-transform duration-700 group-hover/card:scale-105"
                 loading="lazy"
               />
               {/* Case Study Badge Overlay */}
-              <div className="absolute inset-0 bg-bg-primary/20 backdrop-blur-[1px] opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
-                <span className="px-4.5 py-2.5 rounded-2xl border border-white/10 bg-text-primary/95 text-bg-primary font-heading font-black text-[10px] uppercase tracking-widest shadow-lg flex items-center gap-2 transform translate-y-2 group-hover/card:translate-y-0 transition-all duration-300">
-                  Explore Case Study
+              <div className="absolute inset-0 bg-bg-primary/25 backdrop-blur-[2px] opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
+                <span className="px-4.5 py-2.5 rounded-2xl border border-glass-border bg-text-primary text-bg-primary font-heading font-black text-[10px] uppercase tracking-widest shadow-lg flex items-center gap-2 transform translate-y-2 group-hover/card:translate-y-0 transition-all duration-300">
+                  Explore & Study
                 </span>
               </div>
             </div>
@@ -140,6 +140,11 @@ export default function Projects() {
       role: "Lead Systems Architect",
       challenge: "Ensuring secure role access parameters and reliable session validations across an un-cached PHP environment containing user transactions.",
       features: ["Custom role permissions structure (Admin vs Client)", "Secure credit credentials masking", "Advanced search optimization logs", "Dynamic product uploads database controller"]
+    },
+    5: {
+      role: "Frontend Architect & Designer",
+      challenge: "Designing a clean, luxury interface that visually mirrors premium Lahori housing listings, with responsive filtering controls and custom search layout cards.",
+      features: ["Premium property showcase grid", "Dynamic location and property type search filters", "Interactive inquiry request details", "Polished client feedback slider"]
     }
   };
 
@@ -147,11 +152,13 @@ export default function Projects() {
     1: "var(--accent-primary)",
     2: "var(--accent-secondary)",
     3: "var(--accent-tertiary)",
-    4: "var(--accent-gold)"
+    4: "var(--accent-gold)",
+    5: "var(--accent-primary)"
   };
 
   const getCategory = (project) => {
     if (project.id === 1) return "Frontend";
+    if (project.id === 5) return "Frontend";
     if (project.id === 4) return "E-Commerce";
     return "Full-Stack";
   };
