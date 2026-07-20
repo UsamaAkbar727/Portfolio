@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects as projectData } from "../data/projects";
 import { FI, highlightText } from "./AnimationHelpers";
 import { FaTimes, FaExternalLinkAlt, FaGithub, FaChevronRight } from "react-icons/fa";
 
+const getImgClass = (id) => {
+  if (id === 4) return "object-cover object-center scale-[1.38] origin-center transition-transform duration-700 group-hover/card:scale-[1.42]";
+  if (id === 3) return "object-cover object-center scale-[1.12] origin-center transition-transform duration-700 group-hover/card:scale-[1.16]";
+  if (id === 2) return "object-cover object-center scale-[1.15] origin-center transition-transform duration-700 group-hover/card:scale-[1.19]";
+  return "object-cover object-top transition-transform duration-700 group-hover/card:scale-105";
+};
+
 // Elegant Project Card
-function ProjectCard({ project, onViewDetails, category, activeColor }) {
+const ProjectCard = forwardRef(({ project, onViewDetails, category, activeColor }, ref) => {
   return (
     <motion.div
+      ref={ref}
       layout
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -29,9 +37,9 @@ function ProjectCard({ project, onViewDetails, category, activeColor }) {
       <div className="relative z-10 flex flex-col h-full">
         {/* Sleek Browser Frame Image Wrapper */}
         <div className="p-4 bg-bg-secondary/40 border-b border-glass-border">
-          <div className="relative rounded-2xl border border-glass-border bg-bg-primary overflow-hidden shadow-sm aspect-[16/10] flex items-center justify-center">
+          <div className="relative rounded-2xl border border-glass-border bg-bg-primary overflow-hidden shadow-sm aspect-[16/10] flex flex-col">
             {/* Fake browser bar */}
-            <div className="absolute top-0 left-0 w-full bg-bg-secondary border-b border-glass-border px-3.5 py-2.5 flex items-center justify-between select-none z-20">
+            <div className="w-full bg-bg-secondary border-b border-glass-border px-3.5 py-2.5 flex items-center justify-between select-none z-20 flex-shrink-0">
               <div className="flex gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-red-500/30" />
                 <span className="w-2 h-2 rounded-full bg-yellow-500/30" />
@@ -44,17 +52,18 @@ function ProjectCard({ project, onViewDetails, category, activeColor }) {
             </div>
 
             {/* Viewport Image */}
-            <div className="w-full h-full pt-7 overflow-hidden relative bg-bg-secondary flex items-center justify-center">
+            <div className="w-full flex-grow overflow-hidden relative bg-bg-secondary">
               <img
                 src={project.image}
                 alt={project.name}
-                className="w-full h-full object-contain transition-transform duration-700 group-hover/card:scale-105"
+                className={`w-full h-full ${getImgClass(project.id)}`}
                 loading="lazy"
               />
               {/* Case Study Badge Overlay */}
               <div className="absolute inset-0 bg-bg-primary/25 backdrop-blur-[2px] opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10">
-                <span className="px-4.5 py-2.5 rounded-2xl border border-glass-border bg-text-primary text-bg-primary font-heading font-black text-[10px] uppercase tracking-widest shadow-lg flex items-center gap-2 transform translate-y-2 group-hover/card:translate-y-0 transition-all duration-300">
-                  Explore & Study
+                <span className="px-5 py-2.5 rounded-full border border-glass-border bg-bg-primary/95 text-text-primary font-heading font-black text-[10px] uppercase tracking-widest shadow-premium flex items-center gap-2 transform translate-y-2 group-hover/card:translate-y-0 transition-all duration-300">
+                  <span>Explore & Study</span>
+                  <FaChevronRight className="text-[8px] text-accent-primary" />
                 </span>
               </div>
             </div>
@@ -112,7 +121,7 @@ function ProjectCard({ project, onViewDetails, category, activeColor }) {
       </div>
     </motion.div>
   );
-}
+});
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
