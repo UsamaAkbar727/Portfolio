@@ -122,7 +122,7 @@ export default function Skills() {
                   </h3>
                   
                   {/* Tool List */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4">
                     {frontendSkills.map((skill) => {
                       const Icon = iconMap[skill.icon];
                       const isActive = activeSkill.name === skill.name;
@@ -176,7 +176,7 @@ export default function Skills() {
                   </h3>
                   
                   {/* Tool List */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4">
                     {backendSkills.map((skill) => {
                       const Icon = iconMap[skill.icon];
                       const isActive = activeSkill.name === skill.name;
@@ -287,7 +287,7 @@ export default function Skills() {
                   </h3>
 
                   {/* Databases and DevOps grid */}
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
                     {dataDevopsSkills.map((skill) => {
                       const Icon = iconMap[skill.icon];
                       const isActive = activeSkill.name === skill.name;
