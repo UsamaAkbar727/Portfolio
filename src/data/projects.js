@@ -43,5 +43,14 @@ export const projects = [
     liveLink: 'https://real-estate-pi-henna.vercel.app/',
     image: '/images/imperial_estates.png',
     featured: true
+  },
+  {
+    id: 6,
+    name: 'LUXORA - Luxury Rooftop Lounge',
+    description: 'A premium digital experience for a luxury rooftop lounge and event venue, featuring bespoke space booking systems, elegant timelines, and smooth scrolling animations.',
+    technologies: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
+    liveLink: 'https://luxora-hotel-ochre.vercel.app/',
+    image: '/images/luxora.png',
+    featured: true
   }
 ];

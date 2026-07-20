@@ -154,6 +154,11 @@ export default function Projects() {
       role: "Frontend Architect & Designer",
       challenge: "Designing a clean, luxury interface that visually mirrors premium Lahori housing listings, with responsive filtering controls and custom search layout cards.",
       features: ["Premium property showcase grid", "Dynamic location and property type search filters", "Interactive inquiry request details", "Polished client feedback slider"]
+    },
+    6: {
+      role: "Frontend Engineer & UI Specialist",
+      challenge: "Building a high-end luxury aesthetic with smooth scroll-triggered animations and a responsive custom booking layout without sacrificing image rendering performance.",
+      features: ["Premium room/space booking mockups", "Custom timeline storytelling track", "Interactive guest RSVP state validations", "Retractable navigation and glassmorphism elements"]
     }
   };
 
@@ -162,12 +167,14 @@ export default function Projects() {
     2: "var(--accent-secondary)",
     3: "var(--accent-tertiary)",
     4: "var(--accent-gold)",
-    5: "var(--accent-primary)"
+    5: "var(--accent-primary)",
+    6: "var(--accent-gold)"
   };
 
   const getCategory = (project) => {
     if (project.id === 1) return "Frontend";
     if (project.id === 5) return "Frontend";
+    if (project.id === 6) return "Frontend";
     if (project.id === 4) return "E-Commerce";
     return "Full-Stack";
   };
