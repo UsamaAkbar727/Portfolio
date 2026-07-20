@@ -13,9 +13,12 @@ import {
   FaNodeJs,
   FaGitAlt,
   FaTerminal,
-  FaChevronRight
+  FaChevronRight,
+  FaRobot,
+  FaMagic,
+  FaBrain
 } from 'react-icons/fa';
-import { SiTailwindcss, SiExpress, SiPostman, SiNpm } from 'react-icons/si';
+import { SiTailwindcss, SiExpress, SiPostman, SiNpm, SiOpenai } from 'react-icons/si';
 import { FI, highlightText } from './AnimationHelpers';
 
 const iconMap = {
@@ -34,7 +37,11 @@ const iconMap = {
   FaGitAlt,
   SiPostman,
   SiNpm,
-  FaTerminal
+  FaTerminal,
+  FaRobot,
+  FaMagic,
+  SiOpenai,
+  FaBrain
 };
 
 const frontendSkills = [
@@ -58,7 +65,12 @@ const dataDevopsSkills = [
   { name: 'MongoDB Database', icon: 'FaLeaf', color: '#47A248', level: 82, desc: 'Document schemas aggregates, cursor processing, JSON catalogs.' },
   { name: 'Git & Versioning', icon: 'FaGitAlt', color: '#F05032', level: 92, desc: 'Branch merges, commit records, rebase operations, conflict resolves.' },
   { name: 'Postman Client', icon: 'SiPostman', color: '#FF6C37', level: 88, desc: 'API queries testing, token headers, collection schemas mockups.' },
-  { name: 'NPM & Package', icon: 'SiNpm', color: '#CB3837', level: 90, desc: 'Dependency modules imports, package configurations, lock scripts.' }
+  { name: 'NPM & Package', icon: 'SiNpm', color: '#CB3837', level: 90, desc: 'Dependency modules imports, package configurations, lock scripts.' },
+  { name: 'Cursor AI / IDE', icon: 'FaRobot', color: '#38BDF8', level: 95, desc: 'AI-assisted code generation, multi-file edits, workspace indexing.' },
+  { name: 'OpenAI / Gemini', icon: 'SiOpenai', color: '#10B981', level: 88, desc: 'LLM APIs integration, prompt structuring, assistant workflows.' },
+  { name: 'Antigravity AI', icon: 'FaMagic', color: '#A855F7', level: 96, desc: 'Google Deepmind agentic AI assistant for advanced code reasoning and generation.' },
+  { name: 'Codex AI', icon: 'FaBrain', color: '#EC4899', level: 88, desc: 'OpenAI Codex models translating natural language instructions to functional code.' },
+  { name: 'Qoder AI', icon: 'FaTerminal', color: '#3B82F6', level: 90, desc: 'Intelligent code generation, test suite validation, and debug optimization.' }
 ];
 
 export default function Skills() {
@@ -110,7 +122,7 @@ export default function Skills() {
                   </h3>
                   
                   {/* Tool List */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {frontendSkills.map((skill) => {
                       const Icon = iconMap[skill.icon];
                       const isActive = activeSkill.name === skill.name;
@@ -164,7 +176,7 @@ export default function Skills() {
                   </h3>
                   
                   {/* Tool List */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {backendSkills.map((skill) => {
                       const Icon = iconMap[skill.icon];
                       const isActive = activeSkill.name === skill.name;
@@ -271,7 +283,7 @@ export default function Skills() {
                     <span className="text-xs font-mono text-text-secondary/70">Database & DevOps</span>
                   </div>
                   <h3 className="font-heading text-2xl font-black text-text-primary uppercase tracking-wide mb-8">
-                    Databases, Versioning & Tools
+                    Databases, Tools & AI
                   </h3>
 
                   {/* Databases and DevOps grid */}
@@ -306,7 +318,7 @@ export default function Skills() {
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-glass-border flex items-center justify-between text-xs text-text-secondary font-mono">
-                  <span>MySQL, MongoDB, Git, Postman, NPM</span>
+                  <span>MySQL, Git, Postman, NPM, AI Assistants</span>
                   <FaChevronRight size={10} className="text-accent-gold animate-pulse" />
                 </div>
 

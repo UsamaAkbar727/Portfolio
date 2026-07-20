@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useInView } from 'framer-motion';
 import { FaLaptopCode, FaDatabase, FaServer } from 'react-icons/fa';
 import { FI, highlightText, AC } from './AnimationHelpers';
@@ -8,8 +8,18 @@ import { FI, highlightText, AC } from './AnimationHelpers';
 const StatWidget = ({ label, color, targetVal, maxVal }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-20px' });
-  const radius = 56;
-  const stroke = 3;
+  
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 640px)');
+    setIsMobile(media.matches);
+    const listener = (e) => setIsMobile(e.matches);
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, []);
+
+  const radius = isMobile ? 40 : 56;
+  const stroke = isMobile ? 2.5 : 3;
   const normalizedRadius = radius - stroke * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = isInView
@@ -159,7 +169,7 @@ export default function About() {
           {/* Left Column: Big Editorial Bio */}
           <FI delay={0.1} y={20} className="lg:col-span-7 flex flex-col justify-between">
             <div className="rounded-[3rem] p-[1px] bg-glass-border shadow-premium h-full flex">
-              <div className="rounded-[calc(3rem-1px)] p-8 sm:p-12 bg-bg-primary flex flex-col justify-between h-full w-full">
+              <div className="rounded-[calc(3rem-1px)] p-6 sm:p-12 bg-bg-primary flex flex-col justify-between h-full w-full">
                 
                 <div className="space-y-8">
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-glass-border bg-bg-secondary text-[10px] font-mono font-bold uppercase tracking-widest text-text-secondary select-none w-fit">

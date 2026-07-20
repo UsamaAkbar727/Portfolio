@@ -17,11 +17,12 @@ export function FI({ children, delay = 0, duration = 0.7, x = 0, y = 30, classNa
 }
 
 // Magnetic Component - Optimized to use smooth CSS scale instead of high-frequency mousemove listeners
-export function Mg({ children }) {
+export function Mg({ children, className = '' }) {
   return (
     <motion.div
       whileHover={{ scale: 1.03, y: -2 }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
+      className={className}
     >
       {children}
     </motion.div>
@@ -90,7 +91,7 @@ export function AT({ text, className = '' }) {
 export function AC({ value, suffix = '', duration = 2 }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-20px' });
 
   useEffect(() => {
     if (!isInView) return;
