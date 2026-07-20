@@ -13,7 +13,7 @@ function ProjectCard({ project, onViewDetails, category, activeColor }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4 }}
-      className="group/card relative rounded-[2rem] p-[1px] bg-glass-border hover:bg-text-secondary/20 transition-all duration-500 shadow-premium hover:shadow-premium-hover cursor-pointer overflow-hidden flex flex-col justify-between"
+      className="group/card relative rounded-[2rem] p-[1px] bg-glass-border hover:bg-text-secondary/20 transition-all duration-500 shadow-premium hover:shadow-premium-hover cursor-pointer overflow-hidden flex flex-col justify-between w-[85vw] max-w-[340px] md:w-auto md:max-w-none shrink-0 md:shrink-1 snap-center md:snap-align-none"
       onClick={() => onViewDetails(project)}
     >
       <div className="absolute inset-[1px] rounded-[calc(2rem-1px)] bg-bg-primary z-0" />
@@ -217,11 +217,17 @@ export default function Projects() {
         </FI>
       </div>
 
-      {/* Projects Grid Layout */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-30">
+      {/* Projects Grid / Slider Layout */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-30 w-full overflow-hidden">
+        {/* Mobile Swipe Indicator */}
+        <div className="flex md:hidden items-center justify-center gap-2 mb-6 font-mono text-[10px] text-text-secondary/40 font-bold uppercase tracking-wider select-none">
+          <span>Swipe to explore</span>
+          <span className="animate-bounce-horizontal">→</span>
+        </div>
+
         <motion.div 
           layout 
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
+          className="flex md:grid md:grid-cols-2 overflow-x-auto md:overflow-x-visible snap-x snap-mandatory md:snap-none gap-6 md:gap-8 lg:gap-10 pb-6 md:pb-0 scrollbar-none"
         >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project) => (

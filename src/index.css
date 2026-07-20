@@ -427,3 +427,25 @@ body {
 .animate-float-slower {
   animation: float-slower 6s ease-in-out infinite;
 }
+
+/* Custom scrollbar hiding utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Horizontal bounce animation for swiping visual cues */
+@keyframes bounce-horizontal {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+.animate-bounce-horizontal {
+  animation: bounce-horizontal 1.2s ease-in-out infinite;
+}
